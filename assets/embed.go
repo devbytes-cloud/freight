@@ -1,4 +1,4 @@
-package hookinator
+package assets
 
 import _ "embed"
 
