@@ -1,2 +1,5 @@
 parser
 config.json
+
+# Parser build output for binaries
+./assets/dist/

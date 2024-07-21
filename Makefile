@@ -8,3 +8,7 @@ build-skiff:
 
 .Phony: build-all
 build-all: build-parser build-skiff
+
+.Phony: parser-build-binaries
+parser-build-binaries:
+	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml

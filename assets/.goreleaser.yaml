@@ -1,0 +1,13 @@
+version: 2
+
+dist: ./dist
+
+builds:
+  -
+    main: ./cmd/parser/main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
