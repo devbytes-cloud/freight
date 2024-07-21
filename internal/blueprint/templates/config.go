@@ -1,7 +1,7 @@
 package templates
 
 const Config = `{
-  "skiff": {
+  "carriage": {
     "pre-commit": {
 		"echo": "echo skiff is running!"
     },

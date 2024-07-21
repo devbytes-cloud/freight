@@ -2,6 +2,6 @@ package templates
 
 const PreHookTmpl = `#!/bin/bash
 echo "================================"
-echo "Skiff {{ .Type }} Hook"
+echo "Carriage {{ .Type }} Hook"
 echo "================================"
-{{ .Path }}/parser {{ .Type }} $1`
+{{ .Path }}/railcar {{ .Type }} $1`

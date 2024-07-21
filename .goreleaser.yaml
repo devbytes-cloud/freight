@@ -10,7 +10,7 @@ version: 2
 
 before:
   hooks:
-    - make parser-build-binaries
+    - make railcar-build-binaries
 
 
 #builds:

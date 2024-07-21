@@ -10,14 +10,14 @@ import (
 	"github.com/devbytes-cloud/hookinator/internal/blueprint"
 )
 
-type Hookinator struct {
+type RailCar struct {
 	PreCommit  map[string]string `json:"pre-commit"`
 	PostCommit map[string]string `json:"post-commit"`
 	CommitMsg  map[string]string `json:"commit-msg"`
 }
 
 type Config struct {
-	Hookinator Hookinator `json:"skiff"`
+	RailCar RailCar `json:"carriage"`
 }
 
 func main() {
@@ -49,13 +49,13 @@ func main() {
 
 		// Process the commit message
 		fmt.Println("Commit message is:", os.Args[2])
-		if len(config.Hookinator.CommitMsg) != 0 {
-			run(config.Hookinator.CommitMsg, os.Args[2])
+		if len(config.RailCar.CommitMsg) != 0 {
+			run(config.RailCar.CommitMsg, os.Args[2])
 		}
 
 	case blueprint.PreCommit:
-		if len(config.Hookinator.PreCommit) != 0 {
-			run(config.Hookinator.PreCommit, "")
+		if len(config.RailCar.PreCommit) != 0 {
+			run(config.RailCar.PreCommit, "")
 		}
 
 	}
