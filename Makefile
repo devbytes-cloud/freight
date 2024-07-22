@@ -8,3 +8,11 @@ build-skiff:
 
 .Phony: build-all
 build-all: build-parser build-skiff
+
+.Phony: railcar-build-binaries
+railcar-build-binaries:
+	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
+
+.Phony: go-test
+go-test:
+	go test ./... --race

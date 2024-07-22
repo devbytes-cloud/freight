@@ -1,2 +1,6 @@
-parser
+railcar
 config.json
+
+# Parser build output for binaries
+/assets/dist/
+dist/
