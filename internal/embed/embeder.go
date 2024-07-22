@@ -9,8 +9,7 @@ import (
 	"github.com/devbytes-cloud/hookinator/assets"
 )
 
-// Factory pattern
-
+// List of supported OS + Arch railcar binaries
 const (
 	macOSSilicon string = "darwin-arm64"
 	macOSIntel   string = "darwin-amd64"
@@ -22,13 +21,13 @@ const (
 	windowsARM32 string = "windows-arm"
 )
 
-// WriteBinary ...
+// WriteBinary will install railcar into your working directory
 func WriteBinary() error {
 	systemInfo := fmt.Sprintf("%s-%s", fetchOS(), fetchArch())
 	binary := fetchBinary(systemInfo)
 
 	if binary == nil {
-		panic("couldn't find matching os and arch")
+		return fmt.Errorf("no matching railcar binary for %s", systemInfo)
 	}
 
 	op := filepath.Join(".", "railcar")
@@ -39,6 +38,7 @@ func WriteBinary() error {
 	return nil
 }
 
+// fetchBinary will return the proper railcar binary for your system
 func fetchBinary(systemInfo string) []byte {
 	switch systemInfo {
 	case macOSSilicon:
