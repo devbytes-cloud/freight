@@ -31,11 +31,7 @@ func WriteBinary() error {
 	}
 
 	op := filepath.Join(".", "railcar")
-	if err := os.WriteFile(op, binary, 0o755); err != nil {
-		return err
-	}
-
-	return nil
+	return os.WriteFile(op, binary, 0o755)
 }
 
 // fetchBinary will return the proper railcar binary for your system
