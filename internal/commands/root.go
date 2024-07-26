@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/devbytes-cloud/hookinator/internal/validate"
+	"github.com/devbytes-cloud/freight/internal/validate"
 
-	"github.com/devbytes-cloud/hookinator/internal/blueprint"
-	"github.com/devbytes-cloud/hookinator/internal/embed"
+	"github.com/devbytes-cloud/freight/internal/blueprint"
+	"github.com/devbytes-cloud/freight/internal/embed"
 	"github.com/spf13/cobra"
 )
 

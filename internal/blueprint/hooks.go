@@ -3,8 +3,8 @@ package blueprint
 import (
 	"fmt"
 
-	"github.com/devbytes-cloud/hookinator/internal/blueprint/templates"
-	"github.com/devbytes-cloud/hookinator/internal/validate"
+	"github.com/devbytes-cloud/freight/internal/blueprint/templates"
+	"github.com/devbytes-cloud/freight/internal/validate"
 )
 
 var (
