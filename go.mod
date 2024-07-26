@@ -1,4 +1,4 @@
-module github.com/devbytes-cloud/hookinator
+module github.com/devbytes-cloud/freight
 
 go 1.22.4
 

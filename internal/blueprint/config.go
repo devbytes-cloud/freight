@@ -1,6 +1,6 @@
 package blueprint
 
-import "github.com/devbytes-cloud/hookinator/internal/blueprint/templates"
+import "github.com/devbytes-cloud/freight/internal/blueprint/templates"
 
 // NewConfig generates a blueprint for the config file
 func NewConfig() *BluePrint {

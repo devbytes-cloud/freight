@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/devbytes-cloud/hookinator/internal/blueprint"
+	"github.com/devbytes-cloud/freight/internal/blueprint"
 )
 
 type RailCar struct {

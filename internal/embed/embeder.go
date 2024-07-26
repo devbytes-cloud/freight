@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/devbytes-cloud/hookinator/assets"
+	"github.com/devbytes-cloud/freight/assets"
 )
 
 // List of supported OS + Arch railcar binaries
