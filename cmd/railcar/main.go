@@ -7,25 +7,13 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/devbytes-cloud/freight/internal/blueprint"
+	"github.com/devbytes-cloud/freight/internal/githooks/commit"
 )
 
 type RailCar struct {
-	CommitOperations CommitOperations `json:"commit-operations"`
+	CommitOperations commit.Operations `json:"commit-operations"`
 }
 
-type CommitOperations struct {
-	// PreCommit This hook is invoked first before the commit process starts. It’s used to inspect or modify the changes being committed. If it exits non-zero, the commit is aborted.
-	PreCommit map[string]string `json:"pre-commit"`
-	// PreCommitMsg This hook is called after the default commit message is created but before the user is given the chance to edit it. It’s useful for altering the default message.
-	PrepareCommitMsg map[string]string `json:"prepare-commit-msg"`
-	// CommitMsg This hook is called after the user has edited the commit message. It’s used to validate or enforce specific commit message formats. If it exits non-zero, the commit is aborted.
-	CommitMsg map[string]string `json:"commit-msg"`
-	// CommitMsgPass This hook is
-	CommitMsgPass map[string]string `json:"commit-msg-pass"`
-	// PostCommit This hook is invoked after a commit is made. It cannot affect the commit process but can be used for notifications or logging.
-	PostCommit map[string]string `json:"post-commit"`
-}
 type Config struct {
 	RailCar RailCar `json:"carriage"`
 }
@@ -50,7 +38,7 @@ func main() {
 	}
 
 	switch hookType {
-	case blueprint.CommitMsg:
+	case commit.CommitMsg:
 		//commitMsg, err := ioutil.ReadFile(os.Args[2])
 		//if err != nil {
 		//	fmt.Println("Error reading commit message file:", err)
@@ -63,16 +51,16 @@ func main() {
 			run(config.RailCar.CommitOperations.CommitMsg, os.Args[2])
 		}
 
-	case blueprint.PreCommit:
+	case commit.PreCommit:
 		if len(config.RailCar.CommitOperations.PreCommit) != 0 {
 			run(config.RailCar.CommitOperations.PreCommit, "")
 		}
 
-	case blueprint.PrepareCommitMsg:
+	case commit.PrepareCommitMsg:
 		if len(config.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
 			run(config.RailCar.CommitOperations.PrepareCommitMsg, "")
 		}
-	case blueprint.PostCommit:
+	case commit.PostCommit:
 		if len(config.RailCar.CommitOperations.PostCommit) != 0 {
 			run(config.RailCar.CommitOperations.PostCommit, "")
 		}
