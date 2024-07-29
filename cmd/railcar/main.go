@@ -91,10 +91,9 @@ func main() {
 func run(data map[string]string, hookData string) {
 	for k, v := range data {
 
-		fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
-
 		cmd := exec.Command("sh", "-c", v)
 		if hookData != "" {
+			fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
 			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))
 		}
 		fmt.Println(cmd.String())
