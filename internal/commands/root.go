@@ -59,6 +59,24 @@ func setupHooks() error {
 	if err := bp1.Write(); err != nil {
 		return err
 	}
+
+	bp2, err := blueprint.NewPrepareCommitMsg()
+	if err != nil {
+		return err
+	}
+
+	if err := bp2.Write(); err != nil {
+		return err
+	}
+
+	bp3, err := blueprint.NewPostCommit()
+	if err != nil {
+		return err
+	}
+
+	if err := bp3.Write(); err != nil {
+		return err
+	}
 	return nil
 }
 
