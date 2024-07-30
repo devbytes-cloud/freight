@@ -37,6 +37,8 @@ func main() {
 		panic(err)
 	}
 
+	fmt.Println("hook type is ", hookType)
+
 	switch hookType {
 	case commit.CommitMsg:
 		//commitMsg, err := ioutil.ReadFile(os.Args[2])
@@ -64,6 +66,9 @@ func main() {
 		if len(config.RailCar.CommitOperations.PostCommit) != 0 {
 			run(config.RailCar.CommitOperations.PostCommit, "")
 		}
+	default:
+		fmt.Println("couldnt find hook type which was")
+		fmt.Println(hookType)
 	}
 
 	// Read the commit message from the file
@@ -79,9 +84,9 @@ func main() {
 func run(data map[string]string, hookData string) {
 	for k, v := range data {
 
+		fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
 		cmd := exec.Command("sh", "-c", v)
 		if hookData != "" {
-			fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
 			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))
 		}
 		fmt.Println(cmd.String())
