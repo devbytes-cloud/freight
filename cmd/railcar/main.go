@@ -7,13 +7,11 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/devbytes-cloud/freight/internal/blueprint"
+	"github.com/devbytes-cloud/freight/internal/githooks/commit"
 )
 
 type RailCar struct {
-	PreCommit  map[string]string `json:"pre-commit"`
-	PostCommit map[string]string `json:"post-commit"`
-	CommitMsg  map[string]string `json:"commit-msg"`
+	CommitOperations commit.Operations `json:"commit-operations"`
 }
 
 type Config struct {
@@ -39,8 +37,10 @@ func main() {
 		panic(err)
 	}
 
+	fmt.Println("hook type is ", hookType)
+
 	switch hookType {
-	case blueprint.CommitMsg:
+	case commit.CommitMsg:
 		//commitMsg, err := ioutil.ReadFile(os.Args[2])
 		//if err != nil {
 		//	fmt.Println("Error reading commit message file:", err)
@@ -49,15 +49,26 @@ func main() {
 
 		// Process the commit message
 		fmt.Println("Commit message is:", os.Args[2])
-		if len(config.RailCar.CommitMsg) != 0 {
-			run(config.RailCar.CommitMsg, os.Args[2])
+		if len(config.RailCar.CommitOperations.CommitMsg) != 0 {
+			run(config.RailCar.CommitOperations.CommitMsg, os.Args[2])
 		}
 
-	case blueprint.PreCommit:
-		if len(config.RailCar.PreCommit) != 0 {
-			run(config.RailCar.PreCommit, "")
+	case commit.PreCommit:
+		if len(config.RailCar.CommitOperations.PreCommit) != 0 {
+			run(config.RailCar.CommitOperations.PreCommit, "")
 		}
 
+	case commit.PrepareCommitMsg:
+		if len(config.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
+			run(config.RailCar.CommitOperations.PrepareCommitMsg, "")
+		}
+	case commit.PostCommit:
+		if len(config.RailCar.CommitOperations.PostCommit) != 0 {
+			run(config.RailCar.CommitOperations.PostCommit, "")
+		}
+	default:
+		fmt.Println("couldnt find hook type which was")
+		fmt.Println(hookType)
 	}
 
 	// Read the commit message from the file
@@ -74,7 +85,6 @@ func run(data map[string]string, hookData string) {
 	for k, v := range data {
 
 		fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
-
 		cmd := exec.Command("sh", "-c", v)
 		if hookData != "" {
 			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/devbytes-cloud/freight/internal/githooks"
+
 	"github.com/devbytes-cloud/freight/internal/validate"
 
 	"github.com/devbytes-cloud/freight/internal/blueprint"
@@ -42,23 +44,19 @@ var rootCmd = &cobra.Command{
 }
 
 func setupHooks() error {
-	bp, err := blueprint.NewPreCommit()
-	if err != nil {
-		return err
+	gitHooks := githooks.NewGitHooks()
+
+	for _, v := range gitHooks.Commit {
+		bp, err := blueprint.NewGitHook(&v)
+		if err != nil {
+			return err
+		}
+
+		if err := bp.Write(); err != nil {
+			return err
+		}
 	}
 
-	if err := bp.Write(); err != nil {
-		return err
-	}
-
-	bp1, err := blueprint.NewCommitMsg()
-	if err != nil {
-		return err
-	}
-
-	if err := bp1.Write(); err != nil {
-		return err
-	}
 	return nil
 }
 
