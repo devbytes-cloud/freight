@@ -2,6 +2,7 @@ package commands
 
 import (
 	_ "embed"
+	"errors"
 	"fmt"
 	"os"
 
@@ -14,31 +15,43 @@ import (
 
 // Execute runs the root command and handles any errors that occur during execution.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := NewRootCmd().Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 }
 
-// rootCmd is the entry command into freight
-var rootCmd = &cobra.Command{
-	Use:   "init",
-	Short: "init",
-	Long:  `init`,
-	Run: func(cmd *cobra.Command, args []string) {
-		if err := validate.GitDirExists(); err != nil {
-			panic(err)
-		}
-		if err := setupHooks(); err != nil {
-			panic(err)
-		}
-		if err := setupConfig(); err != nil {
-			panic(err)
-		}
-		if err := installBinary(); err != nil {
-			panic(err)
-		}
-	},
+// NewRootCmd creates and returns the root command for the CLI application.
+func NewRootCmd() *cobra.Command {
+	rootCmd := &cobra.Command{
+		Use:   "init",
+		Short: "init",
+		Long:  `init`,
+		Run: func(cmd *cobra.Command, args []string) {
+			if err := validate.GitDirExists(); err != nil {
+				panic(err)
+			}
+			if err := setupHooks(); err != nil {
+				panic(err)
+			}
+
+			configForce, err := cmd.Flags().GetBool("config-force")
+			if err != nil {
+				panic(err)
+			}
+
+			if err := setupConfig(configForce); err != nil {
+				panic(err)
+			}
+			if err := installBinary(); err != nil {
+				panic(err)
+			}
+		},
+	}
+
+	rootCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
+
+	return rootCmd
 }
 
 // setupHooks initializes and writes the Git hooks.
@@ -62,12 +75,26 @@ func setupHooks() error {
 }
 
 // setupConfig creates and writes the configuration file.
-func setupConfig() error {
+func setupConfig(forceWrite bool) error {
 	fmt.Println("Generating config file")
 	fmt.Println("=========================")
-	if err := blueprint.NewConfig().Write(); err != nil {
-		return err
+
+	config := blueprint.NewConfig()
+
+	if !forceWrite {
+		if _, err := config.Exists(); err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				forceWrite = true
+			}
+		}
 	}
+
+	if forceWrite {
+		if err := blueprint.NewConfig().Write(); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

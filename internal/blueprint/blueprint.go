@@ -27,6 +27,11 @@ func NewBluePrint(name, writePath, data string, values any) *BluePrint {
 	}
 }
 
+// Exists allows you to check if the file within the blueprint exists
+func (b *BluePrint) Exists() (os.FileInfo, error) {
+	return os.Stat(b.WritePath)
+}
+
 // Write takes the BluePrint data then templates it out to the filesystem
 func (b *BluePrint) Write() error {
 	tmpl := template.Must(template.New(b.Name).Parse(b.Data))
