@@ -1,15 +1,15 @@
-# This .goreleaser.yaml configuration is used to generate all railcar binaries.
+# This .goreleaser.yaml configuration is used to generate all conductor binaries.
 # These binaries are then embedded into the main application, allowing the main
-# application to install the railcar on the user's machine. The embedding process
+# application to install the conductor on the user's machine. The embedding process
 # is facilitated through the use of `//go:embed` directives in `assets/embed.go`.
 version: 2
 
 dist: ./assets/dist
 
 builds:
-  - id: railcar
-    binary: railcar
-    main: ./cmd/railcar/main.go
+  - id: conductor
+    binary: conductor
+    main: ./cmd/conductor/main.go
     env:
       - CGO_ENABLED=0
     goos:

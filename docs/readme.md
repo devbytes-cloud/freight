@@ -2,12 +2,12 @@
 
 ### Project Overview
 
-Freight is a Go-based CLI application designed to streamline your Git workflow by modifying all Git hooks to point to a binary called `railcar` located in your project’s root directory. The `railcar` binary reads from a `config.json` file, also installed by Freight, where you can define actions for specific Git hooks. Each action is specified with a key (the action's name) and a corresponding value (the terminal command to be executed).
+Freight is a Go-based CLI application designed to streamline your Git workflow by modifying all Git hooks to point to a binary called `railcar` located in your project’s root directory. The `railcar` binary reads from a `railcar.json` file, also installed by Freight, where you can define actions for specific Git hooks. Each action is specified with a key (the action's name) and a corresponding value (the terminal command to be executed).
 
 ### Features
 
 - **Git Hooks Setup**: Automatically configures Git hooks to invoke the `railcar` binary.
-- **Configuration Management**: Creates and manages the `config.json` file for hook actions.
+- **Configuration Management**: Creates and manages the `railcar.json` file for hook actions.
 - **Binary Installation**: Installs the `railcar` binary to your project’s root directory.
 
 ### Installation 
@@ -34,8 +34,8 @@ Freight is a Go-based CLI application designed to streamline your Git workflow b
 
 After initializing a repository with `freight init`, two new files will be added to your repo:
 
-- **railcar**: This binary is invoked by each Git hook, executing the actions defined for that specific hook in `config.json`.
-- **config.json**: This file specifies the actions to be taken for each Git hook.
+- **railcar**: This binary is invoked by each Git hook, executing the actions defined for that specific hook in `railcar.json`.
+- **railcar.json**: This file specifies the actions to be taken for each Git hook.
 
 To initialize the application:
 
@@ -45,11 +45,11 @@ To initialize the application:
 
 #### Flags
 
-- `--config-force` or `-c`: Force overwrite the `config.json` file if it already exists.
+- `--config-force` or `-c`: Force overwrite the `railcar.json` file if it already exists.
 
-### Understanding and Using `config.json`
+### Understanding and Using `railcar.json`
 
-The `config.json` file is the central configuration for the `railcar` binary. It allows you to define specific actions to be executed during various Git hook events. The structure is hierarchical, with hooks and their associated actions organized under the `commit-operations` key.
+The `railcar.json` file is the central configuration for the `railcar` binary. It allows you to define specific actions to be executed during various Git hook events. The structure is hierarchical, with hooks and their associated actions organized under the `commit-operations` key.
 
 #### Structure Breakdown
 
@@ -60,7 +60,7 @@ The `config.json` file is the central configuration for the `railcar` binary. It
 
 #### Example Configuration
 
-Here’s how the provided `config.json` works:
+Here’s how the provided `railcar.json` works:
 
 ```json
 {
@@ -97,7 +97,7 @@ To add more actions, simply expand the `commit-operations` object. For example, 
 
 - **Order of Execution**: Actions within a hook may be executed in any order. It is not guaranteed to run in the order they are defined.
 - **Custom Commands**: You can define any terminal command as an action, providing flexibility for various project needs.
-- **Config.json**: If a `config.json` exists in your directory railcar will not overwrite it unless `--config-force` is set.
+- **railcar.json**: If a `railcar.json` exists in your directory railcar will not overwrite it unless `--config-force` is set.
 - 
 ### Example
 

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/pterm/pterm"
+
 	"github.com/devbytes-cloud/freight/internal/blueprint"
 	"github.com/devbytes-cloud/freight/internal/embed"
 	"github.com/devbytes-cloud/freight/internal/githooks"
@@ -28,23 +30,23 @@ func NewRootCmd() *cobra.Command {
 		Short: "init",
 		Long:  `init`,
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := validate.GitDirExists(); err != nil {
-				panic(err)
+			if err := validate.GitDirs(); err != nil {
+				cmd.PrintErrln(err)
 			}
 			if err := setupHooks(); err != nil {
-				panic(err)
+				cmd.PrintErrln(err)
 			}
 
 			configForce, err := cmd.Flags().GetBool("config-force")
 			if err != nil {
-				panic(err)
+				cmd.PrintErrln(err)
 			}
 
 			if err := setupConfig(configForce); err != nil {
 				panic(err)
 			}
 			if err := installBinary(); err != nil {
-				panic(err)
+				cmd.PrintErrln(err)
 			}
 		},
 	}
@@ -56,8 +58,8 @@ func NewRootCmd() *cobra.Command {
 
 // setupHooks initializes and writes the Git hooks.
 func setupHooks() error {
-	fmt.Println("Generating githook files")
-	fmt.Println("=========================")
+	pterm.DefaultSection.Println("Generating .git/hooks")
+	spinner, _ := pterm.DefaultSpinner.Start("generating .git/hooks")
 
 	gitHooks := githooks.NewGitHooks()
 	for _, v := range gitHooks.Commit {
@@ -69,15 +71,18 @@ func setupHooks() error {
 		if err := bp.Write(); err != nil {
 			return err
 		}
+		pterm.Success.Println("✔ Hook written:", v.Name)
+
 	}
+	spinner.Success("All git hooks written successfully")
 
 	return nil
 }
 
 // setupConfig creates and writes the configuration file.
 func setupConfig(forceWrite bool) error {
-	fmt.Println("Generating config file")
-	fmt.Println("=========================")
+	pterm.DefaultSection.Println("Writing config file")
+	spinner, _ := pterm.DefaultSpinner.Start("Writing config railcar.json...")
 
 	config := blueprint.NewConfig()
 
@@ -95,15 +100,19 @@ func setupConfig(forceWrite bool) error {
 		}
 	}
 
+	spinner.Success("Config railcar.json successfully written")
 	return nil
 }
 
 // installBinary writes the embedded binary to the filesystem.
 func installBinary() error {
-	fmt.Println("Generating freight binary")
-	fmt.Println("=========================")
-	if err := embed.WriteBinary(); err != nil {
+	pterm.DefaultSection.Println("Installing Conductor binary")
+	spinner, _ := pterm.DefaultSpinner.Start("Installing conductor binary...")
+	err := embed.WriteBinary()
+	if err != nil {
+		spinner.Fail("Install failed: " + err.Error())
 		return err
 	}
+	spinner.Success("Installed conductor successfully")
 	return nil
 }

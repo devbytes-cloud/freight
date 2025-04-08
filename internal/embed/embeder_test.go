@@ -7,16 +7,22 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestWriteBinary(t *testing.T) {
-	err := WriteBinary()
-	assert.NoError(t, err)
-	assert.FileExists(t, "./railcar")
-	defer func() {
-		err := os.Remove("./railcar")
-		assert.NoError(t, err)
-	}()
+	tmpDir := t.TempDir()
+
+	oldWD, err := os.Getwd()
+	require.NoError(t, err)
+	defer func(dir string) {
+		require.NoError(t, os.Chdir(dir))
+	}(oldWD)
+
+	require.NoError(t, os.Chdir(tmpDir))
+
+	assert.NoError(t, WriteBinary())
+	assert.FileExists(t, "./conductor")
 }
 
 func TestFetchBinary(t *testing.T) {

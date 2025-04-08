@@ -7,51 +7,51 @@ import (
 	"github.com/devbytes-cloud/freight/internal/githooks/commit"
 )
 
+// hooksBaseDir is the base directory for Git hooks
+const hooksBaseDir = ".git/hooks"
+
 // GitHooks contains an array of GitHook
 type GitHooks struct {
 	Commit []GitHook
 }
 
-// GitHook represents a githook with its name, path, and template
+// GitHook represents a Git hook with its name, path, and template
 type GitHook struct {
-	// Name of the githook (also the type)
+	// Name of the Git hook (also the type)
 	Name string
-	// Path to the particular githook
+	// Path to the particular Git hook
 	Path string
-	// Template of the file contents for the githook
+	// Template of the file contents for the Git hook
 	Template string
 }
 
-// NewGitHooks returns a pointer to a GitHooks
+// NewGitHooks returns a pointer to a GitHooks instance with commit hooks initialized
 func NewGitHooks() *GitHooks {
 	return &GitHooks{
-		Commit: []GitHook{
-			{
-				Name:     commit.PreCommit,
-				Path:     hookPath(commit.PreCommit),
-				Template: templates.PreHookTmpl,
-			},
-			{
-				Name:     commit.PrepareCommitMsg,
-				Path:     hookPath(commit.PrepareCommitMsg),
-				Template: templates.PreHookTmpl,
-			},
-			{
-				Name:     commit.CommitMsg,
-				Path:     hookPath(commit.CommitMsg),
-				Template: templates.PreHookTmpl,
-			},
-			{
-				Name:     commit.PostCommit,
-				Path:     hookPath(commit.PostCommit),
-				Template: templates.PreHookTmpl,
-			},
-		},
+		Commit: generateCommitHooks(),
 	}
 }
 
-// hookPath configures the githook path with the particular type
+// hookPath configures the Git hook path for a given hook type
 func hookPath(hookType string) string {
-	base := ".git/hooks"
-	return fmt.Sprintf("%s/%s", base, hookType)
+	return fmt.Sprintf("%s/%s", hooksBaseDir, hookType)
+}
+
+func generateCommitHooks() []GitHook {
+	commitHookNames := []string{
+		commit.PreCommit,
+		commit.PrepareCommitMsg,
+		commit.CommitMsg,
+		commit.PostCommit,
+	}
+
+	hooks := make([]GitHook, len(commitHookNames))
+	for i, hookName := range commitHookNames {
+		hooks[i] = GitHook{
+			Name:     hookName,
+			Path:     hookPath(hookName),
+			Template: templates.PreHookTmpl, // Consider using a different template if needed
+		}
+	}
+	return hooks
 }

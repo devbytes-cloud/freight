@@ -15,13 +15,13 @@ type RailCar struct {
 }
 
 type Config struct {
-	RailCar RailCar `json:"carriage"`
+	RailCar RailCar `json:"railcar"`
 }
 
 func main() {
 	hookType := os.Args[1]
 
-	file, err := os.Open("config.json")
+	file, err := os.Open("railcar.json")
 	if err != nil {
 		panic(err)
 	}
@@ -54,7 +54,9 @@ func main() {
 		}
 
 	case commit.PreCommit:
+		fmt.Println(config.RailCar)
 		if len(config.RailCar.CommitOperations.PreCommit) != 0 {
+			fmt.Println("whores")
 			run(config.RailCar.CommitOperations.PreCommit, "")
 		}
 
@@ -81,11 +83,11 @@ func main() {
 	//•	Applypatch Hooks Order: applypatch-msg → pre-applypatch → post-applypatch
 }
 
-func run(data map[string]string, hookData string) {
-	for k, v := range data {
+func run(data []commit.HookStep, hookData string) {
+	for _, v := range data {
 
-		fmt.Println(fmt.Sprintf("RUNNING :: %s", k))
-		cmd := exec.Command("sh", "-c", v)
+		fmt.Println(fmt.Sprintf("RUNNING :: %s", v.Name))
+		cmd := exec.Command("sh", "-c", v.Command)
 		if hookData != "" {
 			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))
 		}

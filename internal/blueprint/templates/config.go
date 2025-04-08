@@ -1,17 +1,21 @@
 package templates
 
 const Config = `{
-  "carriage": {
-	"commit-operations": {
-		"pre-commit": {
-			"echo": "echo skiff is running!"
-		},
-		"prepare-commit-msg": {
-		},
-		"commit-msg": {
-		},
-		"post-commit": {
-		}	
-	}
+  "railcar": {
+    "commit-operations": {
+      "pre-commit": [
+        {
+          "name": "echo",
+          "command": "echo conductor is running!"
+        }
+      ]
+    },
+    "prepare-commit-msg": {
+    },
+    "commit-msg": {
+    },
+    "post-commit": {
+    }
   }
-}`
+}
+`

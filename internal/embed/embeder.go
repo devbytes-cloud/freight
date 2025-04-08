@@ -9,32 +9,44 @@ import (
 	"github.com/devbytes-cloud/freight/assets"
 )
 
-// List of supported OS + Arch railcar binaries
+// List of supported OS + Arch conductor binaries
 const (
+	// macOSSilicon represents the macOS Silicon architecture (darwin-arm64).
 	macOSSilicon string = "darwin-arm64"
-	macOSIntel   string = "darwin-amd64"
-	linuxAMD64   string = "linux-amd64"
-	linuxARM64   string = "linux-arm64"
-	linuxARM32   string = "linux-arm"
+	// macOSIntel represents the macOS Intel architecture (darwin-amd64).
+	macOSIntel string = "darwin-amd64"
+	// linuxAMD64 represents the Linux AMD64 architecture (linux-amd64).
+	linuxAMD64 string = "linux-amd64"
+	// linuxARM64 represents the Linux ARM64 architecture (linux-arm64).
+	linuxARM64 string = "linux-arm64"
+	// linuxARM32 represents the Linux ARM32 architecture (linux-arm).
+	linuxARM32 string = "linux-arm"
+	// windowsAMD64 represents the Windows AMD64 architecture (windows-amd64).
 	windowsAMD64 string = "windows-amd64"
+	// windowsARM64 represents the Windows ARM64 architecture (windows-arm64).
 	windowsARM64 string = "windows-arm64"
+	// windowsARM32 represents the Windows ARM32 architecture (windows-arm).
 	windowsARM32 string = "windows-arm"
 )
 
-// WriteBinary will install railcar into your working directory
+// WriteBinary will install conductor into your working directory
 func WriteBinary() error {
 	systemInfo := fmt.Sprintf("%s-%s", fetchOS(), fetchArch())
 	binary := fetchBinary(systemInfo)
 
 	if binary == nil {
-		return fmt.Errorf("no matching railcar binary for %s", systemInfo)
+		return fmt.Errorf("no matching conductor binary for %s", systemInfo)
 	}
 
-	op := filepath.Join(".", "railcar")
-	return os.WriteFile(op, binary, 0o755)
+	op := filepath.Join(".", "conductor")
+
+	if err := os.WriteFile(op, binary, 0o755); err != nil {
+		return fmt.Errorf("error writing conductor binary: %s", err)
+	}
+	return nil
 }
 
-// fetchBinary will return the proper railcar binary for your system
+// fetchBinary will return the proper conductor binary for your system
 func fetchBinary(systemInfo string) []byte {
 	switch systemInfo {
 	case macOSSilicon:

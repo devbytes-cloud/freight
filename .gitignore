@@ -1,6 +1,7 @@
 railcar
 freight
-config.json
+railcar.json
+conductor
 
 # Parser build output for binaries
 /assets/dist/

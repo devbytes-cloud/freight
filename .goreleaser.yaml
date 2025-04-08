@@ -10,4 +10,4 @@ version: 2
 
 before:
   hooks:
-    - make railcar-build-binaries
+    - make conductor-build-binaries
