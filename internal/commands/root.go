@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pterm/pterm"
-
 	"github.com/devbytes-cloud/freight/internal/blueprint"
+	"github.com/devbytes-cloud/freight/internal/config"
 	"github.com/devbytes-cloud/freight/internal/embed"
 	"github.com/devbytes-cloud/freight/internal/githooks"
 	"github.com/devbytes-cloud/freight/internal/validate"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
 
@@ -43,7 +43,7 @@ func NewRootCmd() *cobra.Command {
 			}
 
 			if err := setupConfig(configForce); err != nil {
-				panic(err)
+				cmd.PrintErrln(err)
 			}
 			if err := installBinary(); err != nil {
 				cmd.PrintErrln(err)
@@ -82,9 +82,9 @@ func setupHooks() error {
 // setupConfig creates and writes the configuration file.
 func setupConfig(forceWrite bool) error {
 	pterm.DefaultSection.Println("Writing config file")
-	spinner, _ := pterm.DefaultSpinner.Start("Writing config railcar.json...")
+	spinner, _ := pterm.DefaultSpinner.Start("Writing config config.json...")
 
-	config := blueprint.NewConfig()
+	config := blueprint.NewBluePrint("railcar.json", "railcar.json", config.RailcarJson, nil)
 
 	if !forceWrite {
 		if _, err := config.Exists(); err != nil {
@@ -95,7 +95,7 @@ func setupConfig(forceWrite bool) error {
 	}
 
 	if forceWrite {
-		if err := blueprint.NewConfig().Write(); err != nil {
+		if err := config.Write(); err != nil {
 			return err
 		}
 	}

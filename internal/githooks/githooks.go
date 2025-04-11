@@ -1,10 +1,7 @@
 package githooks
 
 import (
-	"fmt"
-
-	"github.com/devbytes-cloud/freight/internal/blueprint/templates"
-	"github.com/devbytes-cloud/freight/internal/githooks/commit"
+	"path/filepath"
 )
 
 // hooksBaseDir is the base directory for Git hooks
@@ -12,7 +9,8 @@ const hooksBaseDir = ".git/hooks"
 
 // GitHooks contains an array of GitHook
 type GitHooks struct {
-	Commit []GitHook
+	Commit   []GitHook
+	Checkout []GitHook
 }
 
 // GitHook represents a Git hook with its name, path, and template
@@ -28,30 +26,26 @@ type GitHook struct {
 // NewGitHooks returns a pointer to a GitHooks instance with commit hooks initialized
 func NewGitHooks() *GitHooks {
 	return &GitHooks{
-		Commit: generateCommitHooks(),
+		Commit:   generateHooks(getCommitHook()),
+		Checkout: generateHooks(getCheckoutHooks()),
 	}
+}
+
+// generateHooks creates a slice of GitHook instances based on the provided hook names.
+// Each GitHook includes its name, path, and a template for the hook script.
+func generateHooks(hook []string) []GitHook {
+	hooks := make([]GitHook, len(hook))
+	for i, hookName := range hook {
+		hooks[i] = GitHook{
+			Name:     hookName,
+			Path:     hookPath(hookName),
+			Template: gitHookTemplate,
+		}
+	}
+	return hooks
 }
 
 // hookPath configures the Git hook path for a given hook type
 func hookPath(hookType string) string {
-	return fmt.Sprintf("%s/%s", hooksBaseDir, hookType)
-}
-
-func generateCommitHooks() []GitHook {
-	commitHookNames := []string{
-		commit.PreCommit,
-		commit.PrepareCommitMsg,
-		commit.CommitMsg,
-		commit.PostCommit,
-	}
-
-	hooks := make([]GitHook, len(commitHookNames))
-	for i, hookName := range commitHookNames {
-		hooks[i] = GitHook{
-			Name:     hookName,
-			Path:     hookPath(hookName),
-			Template: templates.PreHookTmpl, // Consider using a different template if needed
-		}
-	}
-	return hooks
+	return filepath.Join(hooksBaseDir, hookType)
 }
