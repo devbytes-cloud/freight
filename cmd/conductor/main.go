@@ -7,16 +7,9 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/devbytes-cloud/freight/internal/githooks/commit"
+	"github.com/devbytes-cloud/freight/internal/config"
+	"github.com/devbytes-cloud/freight/internal/githooks"
 )
-
-type RailCar struct {
-	CommitOperations commit.Operations `json:"commit-operations"`
-}
-
-type Config struct {
-	RailCar RailCar `json:"railcar"`
-}
 
 func main() {
 	hookType := os.Args[1]
@@ -32,15 +25,15 @@ func main() {
 		panic(err)
 	}
 
-	var config Config
-	if err := json.Unmarshal(byt, &config); err != nil {
+	var cfg config.Config
+	if err := json.Unmarshal(byt, &cfg); err != nil {
 		panic(err)
 	}
 
-	fmt.Println("hook type is ", hookType)
+	// fmt.Println("hook type is ", hookType)
 
 	switch hookType {
-	case commit.CommitMsg:
+	case githooks.CommitMsg:
 		//commitMsg, err := ioutil.ReadFile(os.Args[2])
 		//if err != nil {
 		//	fmt.Println("Error reading commit message file:", err)
@@ -48,25 +41,28 @@ func main() {
 		//}
 
 		// Process the commit message
-		fmt.Println("Commit message is:", os.Args[2])
-		if len(config.RailCar.CommitOperations.CommitMsg) != 0 {
-			run(config.RailCar.CommitOperations.CommitMsg, os.Args[2])
+		// fmt.Println("Commit message is:", os.Args[2])
+		if len(cfg.RailCar.CommitOperations.CommitMsg) != 0 {
+			run(cfg.RailCar.CommitOperations.CommitMsg, os.Args[2])
 		}
 
-	case commit.PreCommit:
-		fmt.Println(config.RailCar)
-		if len(config.RailCar.CommitOperations.PreCommit) != 0 {
-			fmt.Println("whores")
-			run(config.RailCar.CommitOperations.PreCommit, "")
+	case githooks.PreCommit:
+		// fmt.Println(cfg.RailCar)
+		if len(cfg.RailCar.CommitOperations.PreCommit) != 0 {
+			run(cfg.RailCar.CommitOperations.PreCommit, "")
 		}
 
-	case commit.PrepareCommitMsg:
-		if len(config.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
-			run(config.RailCar.CommitOperations.PrepareCommitMsg, "")
+	case githooks.PrepareCommitMsg:
+		if len(cfg.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
+			run(cfg.RailCar.CommitOperations.PrepareCommitMsg, "")
 		}
-	case commit.PostCommit:
-		if len(config.RailCar.CommitOperations.PostCommit) != 0 {
-			run(config.RailCar.CommitOperations.PostCommit, "")
+	case githooks.PostCommit:
+		if len(cfg.RailCar.CommitOperations.PostCommit) != 0 {
+			run(cfg.RailCar.CommitOperations.PostCommit, "")
+		}
+	case githooks.PostCheckout:
+		if len(cfg.RailCar.CheckoutOperations.PostCheckout) != 0 {
+			run(cfg.RailCar.CheckoutOperations.PostCheckout, "")
 		}
 	default:
 		fmt.Println("couldnt find hook type which was")
@@ -83,15 +79,15 @@ func main() {
 	//•	Applypatch Hooks Order: applypatch-msg → pre-applypatch → post-applypatch
 }
 
-func run(data []commit.HookStep, hookData string) {
+func run(data []config.HookStep, hookData string) {
 	for _, v := range data {
 
-		fmt.Println(fmt.Sprintf("RUNNING :: %s", v.Name))
+		// fmt.Println(fmt.Sprintf("RUNNING :: %s", v.Name))
 		cmd := exec.Command("sh", "-c", v.Command)
 		if hookData != "" {
 			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))
 		}
-		fmt.Println(cmd.String())
+		// fmt.Println(cmd.String())
 		cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
 
 		if err := cmd.Run(); err != nil {
