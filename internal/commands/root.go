@@ -59,60 +59,77 @@ func NewRootCmd() *cobra.Command {
 // setupHooks initializes and writes the Git hooks.
 func setupHooks() error {
 	pterm.DefaultSection.Println("Generating .git/hooks")
-	spinner, _ := pterm.DefaultSpinner.Start("generating .git/hooks")
 
+	pterm.Info.Println("Writing Commit Hooks")
 	gitHooks := githooks.NewGitHooks()
 	for _, v := range gitHooks.Commit {
-		bp, err := blueprint.NewGitHook(&v)
-		if err != nil {
-			return err
-		}
-
-		if err := bp.Write(); err != nil {
+		if err := writeConfig(&v); err != nil {
+			pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
 			return err
 		}
 		pterm.Success.Println("✔ Hook written:", v.Name)
 
 	}
-	spinner.Success("All git hooks written successfully")
 
+	pterm.Info.Println("Writing Checkout Hooks")
+	for _, v := range gitHooks.Checkout {
+		if err := writeConfig(&v); err != nil {
+			pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
+			return err
+		}
+		pterm.Success.Println("✔ Hook written:", v.Name)
+	}
+
+	return nil
+}
+
+// writeConfig writes the configuration for a given Git hook using the blueprint package.
+func writeConfig(v *githooks.GitHook) error {
+	bp, err := blueprint.NewGitHook(v)
+	if err != nil {
+		return err
+	}
+
+	if err := bp.Write(); err != nil {
+		return err
+	}
 	return nil
 }
 
 // setupConfig creates and writes the configuration file.
 func setupConfig(forceWrite bool) error {
 	pterm.DefaultSection.Println("Writing config file")
-	spinner, _ := pterm.DefaultSpinner.Start("Writing config config.json...")
 
 	config := blueprint.NewBluePrint("railcar.json", "railcar.json", config.RailcarJson, nil)
 
 	if !forceWrite {
-		if _, err := config.Exists(); err != nil {
-			if errors.Is(err, os.ErrNotExist) {
-				forceWrite = true
-			}
+		_, err := config.Exists()
+		if err == nil {
+			pterm.Warning.Println("⚠ Config railcar.json already exists, will not overwrite unless specified")
+		} else if errors.Is(err, os.ErrNotExist) {
+			forceWrite = true
 		}
 	}
 
 	if forceWrite {
 		if err := config.Write(); err != nil {
+			pterm.Error.Println("✖ Failed to write Config railcar.json: ", err.Error())
 			return err
 		}
+		pterm.Success.Println("✔ Config railcar.json successfully written")
 	}
 
-	spinner.Success("Config railcar.json successfully written")
 	return nil
 }
 
 // installBinary writes the embedded binary to the filesystem.
 func installBinary() error {
 	pterm.DefaultSection.Println("Installing Conductor binary")
-	spinner, _ := pterm.DefaultSpinner.Start("Installing conductor binary...")
 	err := embed.WriteBinary()
 	if err != nil {
-		spinner.Fail("Install failed: " + err.Error())
+		pterm.Error.Println("✖ Failed to install Conductor: ", err.Error())
 		return err
 	}
-	spinner.Success("Installed conductor successfully")
+	pterm.Success.Println("✔ Installed conductor successfully")
 	return nil
 }
