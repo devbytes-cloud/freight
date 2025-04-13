@@ -6,55 +6,61 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
+
+	"github.com/pterm/pterm"
 
 	"github.com/devbytes-cloud/freight/internal/config"
 	"github.com/devbytes-cloud/freight/internal/githooks"
 )
 
 func main() {
+	pterm.EnableDebugMessages()
+	pterm.Debug.MessageStyle = pterm.NewStyle(pterm.FgMagenta)
 	hookType := os.Args[1]
+
+	printCurrentHook(hookType)
 
 	file, err := os.Open("railcar.json")
 	if err != nil {
-		panic(err)
+		pterm.Fatal.Println(err)
 	}
 	defer file.Close()
 
 	byt, err := io.ReadAll(file)
 	if err != nil {
-		panic(err)
+		pterm.Fatal.Println(err)
 	}
 
 	var cfg config.Config
 	if err := json.Unmarshal(byt, &cfg); err != nil {
-		panic(err)
+		pterm.Fatal.Println(err)
 	}
-
-	// fmt.Println("hook type is ", hookType)
 
 	switch hookType {
 	case githooks.CommitMsg:
-		//commitMsg, err := ioutil.ReadFile(os.Args[2])
-		//if err != nil {
-		//	fmt.Println("Error reading commit message file:", err)
-		//	os.Exit(1)
-		//}
+		commitMsg, err := os.ReadFile(os.Args[2])
+		if err != nil {
+			pterm.Fatal.Printfln("Error reading commit message file: ", err)
+		}
 
 		// Process the commit message
-		// fmt.Println("Commit message is:", os.Args[2])
 		if len(cfg.RailCar.CommitOperations.CommitMsg) != 0 {
-			run(cfg.RailCar.CommitOperations.CommitMsg, os.Args[2])
+			run(cfg.RailCar.CommitOperations.CommitMsg, string(commitMsg))
 		}
 
 	case githooks.PreCommit:
-		// fmt.Println(cfg.RailCar)
 		if len(cfg.RailCar.CommitOperations.PreCommit) != 0 {
 			run(cfg.RailCar.CommitOperations.PreCommit, "")
 		}
 
 	case githooks.PrepareCommitMsg:
+		commitMsg, err := os.ReadFile(os.Args[2])
+		if err != nil {
+			pterm.Fatal.Printfln("Error reading commit message file: ", err)
+		}
 		if len(cfg.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
-			run(cfg.RailCar.CommitOperations.PrepareCommitMsg, "")
+			run(cfg.RailCar.CommitOperations.PrepareCommitMsg, string(commitMsg))
 		}
 	case githooks.PostCommit:
 		if len(cfg.RailCar.CommitOperations.PostCommit) != 0 {
@@ -65,8 +71,7 @@ func main() {
 			run(cfg.RailCar.CheckoutOperations.PostCheckout, "")
 		}
 	default:
-		fmt.Println("couldnt find hook type which was")
-		fmt.Println(hookType)
+		pterm.Warning.Printfln("Unknown hook type: %s", hookType)
 	}
 
 	// Read the commit message from the file
@@ -81,18 +86,48 @@ func main() {
 
 func run(data []config.HookStep, hookData string) {
 	for _, v := range data {
+		pterm.Info.Println(fmt.Sprintf("Name: %s", v.Name))
 
-		// fmt.Println(fmt.Sprintf("RUNNING :: %s", v.Name))
 		cmd := exec.Command("sh", "-c", v.Command)
 		if hookData != "" {
-			cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v, hookData))
-		}
-		// fmt.Println(cmd.String())
-		cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
 
+			pterm.Debug.Println(fmt.Sprintf("Hook Data: %s", hookData))
+
+			if strings.Contains(v.Command, "{HOOK_INPUT}") {
+				hookData = strings.TrimSuffix(hookData, "\n")
+				newStr := strings.Replace(v.Command, "{HOOK_INPUT}", hookData, -1)
+				cmd = exec.Command("sh", "-c", newStr)
+			} else {
+				cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v.Command, hookData))
+			}
+		}
+		pterm.Debug.Println(fmt.Sprintf("Command: %s", cmd.String()))
+
+		cmd.Stdout, cmd.Stderr = &ptermWriter{printFunc: ptermInfoPrintWrapper}, &ptermWriter{printFunc: ptermInfoErrorWrapper}
 		if err := cmd.Run(); err != nil {
-			fmt.Fprintf(os.Stderr, "Error executing command: %v\n", err)
+			pterm.Error.Printfln("Error executing command: %s", err.Error())
 			os.Exit(1)
 		}
 	}
+}
+
+func printCurrentHook(hook string) {
+	pterm.DefaultSection.Println("Running hook:", hook)
+}
+
+type ptermWriter struct {
+	printFunc func(...any)
+}
+
+func ptermInfoPrintWrapper(a ...any) {
+	pterm.Info.Println(a...)
+}
+
+func ptermInfoErrorWrapper(a ...any) {
+	pterm.Error.Println(a...)
+}
+
+func (w *ptermWriter) Write(p []byte) (int, error) {
+	w.printFunc(string(p))
+	return len(p), nil
 }
