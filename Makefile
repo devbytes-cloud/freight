@@ -9,8 +9,8 @@ build-all: railcar-build-binaries build-freight
 railcar-build-binaries:
 	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
 
-.Phony: go-test
-go-test:
+.Phony: test-go
+test-go:
 	go test ./... --race
 
 .Phony: lint
