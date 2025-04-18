@@ -25,5 +25,8 @@ jobs:
           # Reads version from go.mod; override with a specific version if you prefer
           go-version-file: go.mod
 
+      - name: make placeholder assets
+        run: make asset-placeholders
+
       - name: Run unit tests with the race detector
         run: make test-go
