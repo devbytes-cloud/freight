@@ -41,7 +41,9 @@ func TestGitDirs(t *testing.T) {
 			oldWd, err := os.Getwd()
 			require.NoError(t, err)
 			require.NoError(t, os.Chdir(tempDir))
-			defer os.Chdir(oldWd)
+			defer func() {
+				_ = os.Chdir(oldWd)
+			}()
 
 			err = validate.GitDirs()
 			if tc.fail {

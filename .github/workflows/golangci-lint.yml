@@ -17,6 +17,16 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
+
+      - name: Install Goreleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: "v2.8.2"
+          install-only: false
+
+      - name: Build railcar binaries
+        run: make railcar-build-binaries
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:

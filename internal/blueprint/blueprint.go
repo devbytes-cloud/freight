@@ -39,7 +39,9 @@ func (b *BluePrint) Write() error {
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	if err := tmpl.Execute(file, b.Values); err != nil {
 		return err
