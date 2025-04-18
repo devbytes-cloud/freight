@@ -25,7 +25,9 @@ func main() {
 	if err != nil {
 		pterm.Fatal.Println(err)
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	byt, err := io.ReadAll(file)
 	if err != nil {
@@ -41,7 +43,7 @@ func main() {
 	case githooks.CommitMsg:
 		commitMsg, err := os.ReadFile(os.Args[2])
 		if err != nil {
-			pterm.Fatal.Printfln("Error reading commit message file: ", err)
+			pterm.Fatal.Println("Error reading commit message file: ", err)
 		}
 
 		// Process the commit message
@@ -57,7 +59,7 @@ func main() {
 	case githooks.PrepareCommitMsg:
 		commitMsg, err := os.ReadFile(os.Args[2])
 		if err != nil {
-			pterm.Fatal.Printfln("Error reading commit message file: ", err)
+			pterm.Fatal.Println("Error reading commit message file: ", err)
 		}
 		if len(cfg.RailCar.CommitOperations.PrepareCommitMsg) != 0 {
 			run(cfg.RailCar.CommitOperations.PrepareCommitMsg, string(commitMsg))
@@ -95,7 +97,7 @@ func run(data []config.HookStep, hookData string) {
 
 			if strings.Contains(v.Command, "{HOOK_INPUT}") {
 				hookData = strings.TrimSuffix(hookData, "\n")
-				newStr := strings.Replace(v.Command, "{HOOK_INPUT}", hookData, -1)
+				newStr := strings.ReplaceAll(v.Command, "{HOOK_INPUT}", hookData)
 				cmd = exec.Command("sh", "-c", newStr)
 			} else {
 				cmd = exec.Command("sh", "-c", fmt.Sprintf("%s %s", v.Command, hookData))

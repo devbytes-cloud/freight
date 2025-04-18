@@ -12,3 +12,7 @@ railcar-build-binaries:
 .Phony: go-test
 go-test:
 	go test ./... --race
+
+.Phony: lint
+lint:
+	golangci-lint run
