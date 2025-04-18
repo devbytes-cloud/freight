@@ -22,7 +22,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           version: "v2.8.2"
-          install-only: false
+          install-only: true
 
       - name: Build railcar binaries
         run: make railcar-build-binaries
