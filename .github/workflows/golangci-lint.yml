@@ -18,14 +18,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Install Goreleaser
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          version: "v2.8.2"
-          install-only: true
-
-      - name: Build railcar binaries
-        run: make railcar-build-binaries
+      - name: make placeholder assets
+        run: make asset-placeholders
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
