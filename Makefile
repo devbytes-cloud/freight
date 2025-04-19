@@ -9,10 +9,30 @@ build-all: railcar-build-binaries build-freight
 railcar-build-binaries:
 	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
 
-.Phony: go-test
-go-test:
+.Phony: test-go
+test-go:
 	go test ./... --race
 
 .Phony: lint
 lint:
 	golangci-lint run
+
+
+.Phony: asset-placeholders
+asset-placeholders:
+	mkdir -p assets/dist/conductor_darwin_amd64_v1 \
+		assets/dist/conductor_darwin_arm64_v8.0 \
+		assets/dist/conductor_linux_amd64_v1 \
+		assets/dist/conductor_linux_arm64_v8.0 \
+		assets/dist/conductor_linux_arm_6 \
+		assets/dist/conductor_windows_amd64_v1 \
+		assets/dist/conductor_windows_arm64_v8.0 \
+		assets/dist/conductor_windows_arm_6
+	touch assets/dist/conductor_darwin_amd64_v1/conductor \
+		assets/dist/conductor_darwin_arm64_v8.0/conductor \
+		assets/dist/conductor_linux_amd64_v1/conductor \
+		assets/dist/conductor_linux_arm64_v8.0/conductor \
+		assets/dist/conductor_linux_arm_6/conductor \
+		assets/dist/conductor_windows_amd64_v1/conductor.exe \
+		assets/dist/conductor_windows_arm64_v8.0/conductor.exe \
+		assets/dist/conductor_windows_arm_6/conductor.exe

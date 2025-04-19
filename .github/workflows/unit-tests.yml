@@ -1,0 +1,27 @@
+name: Unit tests
+
+on:
+  pull_request:   # triggers on every push to a PR
+
+permissions:
+  contents: read  # checkout needs this
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          # Reads version from go.mod; override with a specific version if you prefer
+          go-version-file: go.mod
+
+      - name: make placeholder assets
+        run: make asset-placeholders
+
+      - name: Run unit tests with the race detector
+        run: make test-go
