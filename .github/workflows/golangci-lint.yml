@@ -22,6 +22,6 @@ jobs:
         run: make asset-placeholders
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v7
+        uses: golangci/golangci-lint-action@v8
         with:
           version: v2.1.2
