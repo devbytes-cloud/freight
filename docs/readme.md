@@ -2,161 +2,239 @@
 
 ## Project Overview
 
-Freight is a Go-based CLI application designed to streamline your Git workflow by modifying all Git hooks to point to a
-binary called `conductor` located in your project's root directory. The `conductor` binary reads from a `railcar.json` file,
-also installed by Freight, where you can define actions for specific Git hooks. Each action is specified with a key (the
-action's name) and a corresponding value (the terminal command to be executed).
+Freight is a Go-based CLI tool that streamlines Git workflows by rewiring every Git hook in your repository to call a
+single binary named `conductor` (placed at the repo root).`conductor` reads a JSON configuration file (`railcar.json`)
+that lists the shell commands you want to run for each
+hook. All logic therefore lives in one easy-to-version file instead of a dozen ad-hoc hook scripts.
+
+---
 
 ## Features
 
-- **Git Hooks Setup**: Automatically configures Git hooks to invoke the `railcar` binary.
-- **Configuration Management**: Creates and manages the `railcar.json` file for hook actions.
-- **Binary Installation**: Installs the `railcar` binary to your project's root directory.
+* **One-step hook bootstrap** – `freight init` installs `conductor`, generates `railcar.json`, and rewrites every Git
+  hook in one go.
+* **Declarative configuration** – add, remove, or reorder hook commands by editing JSON.
+* **Cross-platform binaries** – pre-built for Linux, macOS, and Windows.
+* **Positional-argument support** – hooks such as `commit-msg` or `pre-push` automatically pass their arguments to your
+  commands (via `${HOOK_INPUT}`).
+* **Zero vendor lock-in** – all generated files live inside your repo; deleting them restores the default Git behaviour.
+
+---
 
 ## Installation
 
-### Local
+### From Source
 
-1. **Clone the repository**:
-   ```sh
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
-
-2. **Install dependencies**:
-   ```sh
-   go mod tidy
-   ```
-
-3. **Build the application**:
-   ```sh
-   make build-all
-   ```
-
-## Usage
-
-After initializing a repository with `freight init`, two new files will be added to your repo:
-
-- **conductor**: This binary is invoked by each Git hook, executing the actions defined for that specific hook in
-  `railcar.json`.
-- **railcar.json**: This file specifies the actions to be taken for each Git hook.
-
-To initialize the application, run:
-
-```sh
-./freight init
+```
+git clone https://github.com/devbytes-cloud/freight.git
+cd freight
+go mod tidy
+make build-all
 ```
 
-### Flags
+---
 
-- `--config-force` or `-c`: Force overwrite the railcar.json file if it already exists.
+## Quick Start
 
-## Understanding and Using railcar.json
+```
+# Inside any existing Git repository
+freight init                   # installs conductor + railcar.json + rewired hooks
+git add . && git commit -m "test"  # your new hooks will now fire
+```
 
-The `railcar.json` file is the central configuration for the conductor binary. It allows you to define specific actions to
-be executed during various Git hook events. The structure is hierarchical, with hooks and their associated actions
-organized under the commit-operations key.
+Need to overwrite an existing `railcar.json`?  
+`freight init --config-force`
 
-### Structure Breakdown
+---
 
-- **Top-Level Key**: "config" – contains all Git hook configurations.
-- **Nested Key**: "commit-operations" – defines actions for different Git hooks.
-- **Git Hook Keys**: "pre-commit", "prepare-commit-msg", "commit-msg", "post-commit" – these represent specific Git
-  hooks that can be configured.
-- **Actions**: Each Git hook key can contain multiple actions, where the key is the action's name, and the value is the
-  command to be executed.
+## Command-line Reference
 
-### Example Configuration
+| Command        | Description                                 |
+|----------------|---------------------------------------------|
+| `freight init` | Bootstrap Freight in the current repository |
+| `freight help` | Show global or command-specific help        |
 
-Here's how the provided railcar.json works:
+Global flags:
 
-```json
+* `-c, --config-force` – overwrite an existing `railcar.json`
+* `-h, --help` – display help
+
+---
+
+## How It Works (under the hood)
+
+1. **Bootstrap (`freight init`)**
+    * Places a self-contained `conductor` binary at your repo root.
+    * Generates a starter `railcar.json`.
+    * Replaces every file in `.git/hooks/` with a tiny wrapper script that simply executes `conductor` with the hook
+      name and original arguments.
+
+2. **Hook trigger** – Git fires `pre-commit`, `commit-msg`, etc.
+    * The wrapper calls `conductor`.
+    * `conductor` loads `railcar.json`, finds the matching section, and runs each configured action.
+    * Any non-zero exit in a pre-hook aborts the Git operation.
+
+---
+
+## `railcar.json` Syntax
+
+Hierarchical structure
+
+* **config** – top level
+* **\<operation-family\>** – e.g. `commit-operations`, `checkout-operations`
+* **\<git-hook\>** – e.g. `pre-commit`, `commit-msg`, `post-checkout`
+* **actions array** – each item needs:
+    * `name` – label for readability
+    * `command` – shell snippet to run
+
+Example starter file:
+
+```
 {
   "config": {
     "commit-operations": {
-      "pre-commit": [],
+      "pre-commit": [
+        { "name": "echo", "command": "echo conductor is running!" }
+      ],
       "prepare-commit-msg": [],
       "commit-msg": [],
       "post-commit": []
     },
     "checkout-operations": {
-      "post-checkout": [
-        {
-          "name": "hello",
-          "command": "go env"
-        }
-      ]
+      "post-checkout": []
     }
   }
 }
 ```
 
-- **Commit Hooks**: In this example, all commit-related hooks (such as pre-commit, commit-msg, etc.) are defined as
-  empty arrays. You can add actions to these arrays as needed.
-- **Checkout Hooks**: The post-checkout hook is configured with one action that runs the go env command, labeled with
-  the name "hello".
+### Referencing Hook Arguments
 
-### Adding Actions
+Hooks that receive parameters expose them in two interchangeable ways:
 
-To add an action to a hook, simply insert an object into the corresponding array. For example, to add a linting step to
-the pre-commit hook, update the configuration as follows:
+| Placeholder     | Meaning (example: `commit-msg`) |
+|-----------------|---------------------------------|
+| `${HOOK_INPUT}` | Alias for the  parameter (`$1`) |
 
-```json
-"pre-commit": [
-  {
-    "name": "lint",
-    "command": "golangci-lint run"
+Use whichever style you prefer:
+
+```
+{
+  "commit-msg": [
+    { "name": "validate", "command": "grep -E '^(feat|fix): ' ${HOOK_INPUT}" },
+    { "name": "print",    "command": "echo 'MSG file → ${HOOK_INPUT}'" }
+  ]
+}
+```
+
+### Real-world Examples
+
+* Run tests before committing
+
+```
+{
+    "pre-commit": [
+      { "name": "tests", "command": "go test ./..." }
+    ]
   }
-]
 ```
 
-Similarly, to add an action to the commit-msg hook:
+* Enforce Conventional Commits format
 
-```json
-"commit-msg": [
-  {
-    "name": "format",
-    "command": "gofmt -l ."
+```
+{
+    "commit-msg": [
+      { "name": "conventional", "command": "npx commitlint --edit $1" }
+    ]
   }
-]
 ```
 
-### Usage Notes
+* Verify tags before pushing
 
-- **Order of Execution**: Actions within a hook may be executed in any order.
-- **Custom Commands**: You can define any terminal command as an action, providing flexibility for various project
-  needs.
-- **railcar.json Behavior**: If a railcar.json file already exists in your directory, the railcar binary will not
-  overwrite it unless you specify `--config-force`.
-
-
-
-### Example
-
-To initialize the application with forced configuration writing, run:
-
-```sh
-./freight init --config-force
 ```
+{
+    "pre-push": [
+      { "name": "verify-tags", "command": "./scripts/check_tags.sh $@" }
+    ]
+  }
+```
+
+Notes
+
+* **Order** – actions execute sequentially in array order.
+* **Shell chaining** – combine commands (`go vet ./... && go test ./...`).
+* **Environment vars** – standard shell expansion works (`FOO=bar ./script.sh`).
+* **Idempotency** – `freight init` never overwrites `railcar.json` unless `--config-force` is supplied.
+
+---
+
+## Supported Git Hooks & Execution Order
+
+```
+Commit     : pre-commit → prepare-commit-msg → commit-msg → post-commit
+Merge      : pre-merge-commit → post-merge
+Rebase     : pre-rebase → post-rewrite
+Push       : pre-push → update → post-update → post-receive
+Checkout   : pre-checkout → post-checkout
+ApplyPatch : applypatch-msg → pre-applypatch → post-applypatch
+```
+
+---
+
+## Troubleshooting
+
+| Issue                        | Fix                                                                               |
+|------------------------------|-----------------------------------------------------------------------------------|
+| Permission denied on hooks   | `chmod +x ./conductor` (and ensure hooks are executable)                          |
+| Hook seems to do nothing     | Check `.git/hooks/<hook>` – it should contain the wrapper that calls `conductor`. |
+| Command not found            | Ensure the command exists in `$PATH` or use an absolute path in `railcar.json`.   |
+| Need to debug a failing hook | Run the failing hook script manually or add `set -x` inside your action command.  |
+
+---
 
 ## Contributing
 
-1. Fork the repository.
-2. Create a new branch:
-   ```sh
-   git checkout -b feature-branch
-   ```
-3. Make your changes.
-4. Commit your changes:
-   ```sh
-   git commit -m 'Add some feature'
-   ```
-5. Push to the branch:
-   ```sh
-   git push origin feature-branch
-   ```
-6. Open a pull request.
+```
+git clone https://github.com/yourusername/freight.git
+git checkout -b my-feature
+# make changes
+git commit -s -m "feat: awesome contribution"
+git push origin my-feature
+```
+
+Open a Pull Request—thank you!
+
+### Build & Release
+
+### 1. Release & Distribution (GoReleaser + ) `go:embed`
+
+- The repository contains a that builds **platform-specific `conductor` binaries** for Linux, macOS and Windows (amd64,
+  arm, arm64). `.goreleaser.yaml`
+- These binaries are dropped into `assets/dist/` and then **embedded directly into the main `freight` executable** via
+  Go’s mechanism (). `//go:embed``assets/embed.go`
+- At runtime, `freight init` extracts the correct pre-built `conductor` for the user’s OS/CPU.
+- CGO is disabled () so binaries are fully statically linked and portable. `CGO_ENABLED=0`
+
+### 2. Hook-Generation Template
+
+- Git hooks are produced from a **single script template** (`internal/githooks/gitHookTemplate`) so every generated hook
+  is tiny, consistent, and easy to audit.
+- Unit tests in verify that every hook file is generated with the expected path and template. `githooks_test.go`
+
+A short note in the README can highlight the attention to reliability and test coverage.
+
+### 3. Testing
+
+- The project ships with a Go test suite () that covers hook generation, path handling, and validation helpers.
+  `go test ./...`
+- Mentioning this encourages contributors to run tests before submitting pull requests.
+
+### 4. Make Targets
+
+- If you already have a , consider listing other useful targets (`make test`, `make lint`, etc.) so newcomers can find
+  them quickly. `make build-all`
+
+---
 
 ## License
 
-This project is licensed under the BSD-style license. See the LICENSE file for more details.
+BSD-style. See `LICENSE` for full text.
