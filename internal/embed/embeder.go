@@ -25,8 +25,6 @@ const (
 	windowsAMD64 string = "windows-amd64"
 	// windowsARM64 represents the Windows ARM64 architecture (windows-arm64).
 	windowsARM64 string = "windows-arm64"
-	// windowsARM32 represents the Windows ARM32 architecture (windows-arm).
-	windowsARM32 string = "windows-arm"
 )
 
 // WriteBinary will install conductor into your working directory
