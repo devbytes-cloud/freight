@@ -8,11 +8,30 @@
 
 version: 2
 
-before:
-  hooks:
-    - make conductor-build-binaries
-
 builds:
+  - id: "conductor"
+    main: "./cmd/conductor/main.go"
+    binary: "conductor"
+    dir: .
+    # We output to assets/dist so your //go:embed paths stay valid
+    hooks:
+      post:
+        - mkdir -p assets/dist/{{ .Target }}
+        - cp {{ .Path }} assets/dist/{{ .Target }}/{{ .ProjectName }}{{ .Ext }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm
+
   - id: "freight"
     main: "./cmd/freight"
     binary: "freight"
