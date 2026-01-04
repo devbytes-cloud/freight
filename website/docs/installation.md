@@ -7,7 +7,19 @@ sidebar_position: 2
 Getting started with Freight is a three-step process designed for maximum speed and zero friction.
 
 ### 1. Install
-Currently, Freight can be built from source. Download or clone the repository to get started:
+
+#### Homebrew (macOS)
+Install Freight as a Cask:
+```bash
+brew install --cask devbytes-cloud/tap/freight
+```
+
+#### GitHub Releases
+You can also download the pre-compiled binaries directly from the [GitHub Releases](https://github.com/devbytes-cloud/freight/releases) page.
+
+#### Build from source
+
+If you prefer to build Freight from source:
 
 ```bash
 git clone https://github.com/devbytes-cloud/freight.git

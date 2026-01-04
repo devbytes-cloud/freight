@@ -31,7 +31,8 @@ Freight's 'Conductor/Railcar' architecture ensures that your hooks work identica
 ## Quick Start
 
 ### 1. Install
-Download the `freight` binary for your platform.
+- **Homebrew (macOS):** `brew install --cask devbytes-cloud/tap/freight`
+- **Precompiled Binaries:** `[GitHub Releases](https://github.com/devbytes-cloud/freight/releases)`
 
 ### 2. Setup
 Run the following command in your Git repository:
