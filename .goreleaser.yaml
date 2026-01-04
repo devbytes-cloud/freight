@@ -48,11 +48,7 @@ archives:
         formats: ['zip']
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+  disable: true
 
 release:
   github:

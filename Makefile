@@ -7,7 +7,7 @@ build-all: conductor-build-binaries build-freight
 
 .Phony: conductor-build-binaries
 conductor-build-binaries:
-	goreleaser release --config=./assets/.goreleaser.yaml
+	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
 
 .Phony: conductor-dev-build-binaries
 conductor-dev-build-binaries:
