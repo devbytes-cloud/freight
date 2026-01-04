@@ -11,3 +11,77 @@ version: 2
 before:
   hooks:
     - make conductor-build-binaries
+
+builds:
+  - id: "freight"
+    main: "./cmd/freight"
+    binary: "freight"
+
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    flags:
+      - -trimpath
+    ignore:
+      - goos: windows
+        goarch: arm
+archives:
+  - formats: ['tar.gz']
+    # this name template makes the OS and Arch compatible with the results of `uname`.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        formats: ['zip']
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  github:
+    owner: devbytes-cloud
+    name: freight
+
+homebrew_casks:
+  - name: freight
+
+    commit_author:
+      name: devbytes-bot
+      email: admin@devbytes.cloud
+
+    homepage: "https://github.com/devbytes-cloud/freight"
+    description: "Freight is a zero-dependency Git hook orchestrator that replaces fragile scripts with a high-performance Go binary and a single, declarative JSON manifest."
+    license: "MIT"
+    url:
+      verified: github.com/devbytes-cloud/freight
+
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/freight"]
+          end
+
+    repository:
+      owner: devbytes-cloud
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.GORELEASER_AUTH_TOKEN }}"
+

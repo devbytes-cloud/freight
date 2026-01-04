@@ -3,10 +3,14 @@ build-freight:
 	@go build -o freight cmd/freight/main.go
 
 .Phony: build-all
-build-all: railcar-build-binaries build-freight
+build-all: conductor-build-binaries build-freight
 
-.Phony: railcar-build-binaries
-railcar-build-binaries:
+.Phony: conductor-build-binaries
+conductor-build-binaries:
+	goreleaser release --config=./assets/.goreleaser.yaml
+
+.Phony: conductor-dev-build-binaries
+conductor-dev-build-binaries:
 	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
 
 .Phony: test-go
