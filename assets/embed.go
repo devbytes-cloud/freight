@@ -24,6 +24,3 @@ var WindowsAMD64 []byte
 
 //go:embed dist/conductor_windows_arm64_v8.0/conductor.exe
 var WindowsARM64 []byte
-
-//go:embed dist/conductor_windows_arm_6/conductor.exe
-var WindowsARM32 []byte

@@ -63,8 +63,6 @@ func fetchBinary(systemInfo string) []byte {
 		return assets.WindowsAMD64
 	case windowsARM64:
 		return assets.WindowsARM64
-	case windowsARM32:
-		return assets.WindowsARM32
 	default:
 		return nil
 	}
