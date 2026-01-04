@@ -1,12 +1,13 @@
 name: goreleaser
 
 on:
-  pull_request:
   push:
+    tags:
+      - "*"
 
 permissions:
   contents: write
-
+  packages: write
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
