@@ -18,6 +18,11 @@ jobs:
           fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v5
+      - name: Install GoReleaser (System-wide)
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          install-only: true
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
