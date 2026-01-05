@@ -16,6 +16,22 @@
   color: var(--ifm-color-primary);
   font-weight: 800;
   margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.heroLogo {
+  height: 8rem;
+  width: auto;
+}
+
+.heroLogoSpacer {
+  height: 8rem;
+  width: 8rem; /* Match logo width if it's square, or use same value as logo height */
+  visibility: hidden;
 }
 
 .getStartedButton {
@@ -41,6 +57,13 @@
   }
   .heroTitle {
     font-size: 2.5rem;
+    flex-direction: column;
+  }
+  .heroLogo {
+    height: 6rem;
+  }
+  .heroLogoSpacer {
+    display: none;
   }
 }
 

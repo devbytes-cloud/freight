@@ -7,13 +7,13 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Freight',
   tagline: 'The Professional, Zero-Dependency Git Hook Orchestrator.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.jpg',
   headTags: [
     {
       tagName: 'link',
       attributes: {
         rel: 'icon',
-        href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚂</text></svg>',
+        href: 'img/logo.jpg',
       },
     },
   ],
@@ -27,7 +27,7 @@ const config: Config = {
   url: 'https://devbytes-cloud.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/freight/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -70,12 +70,16 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/logo.jpg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Freight 🚂',
+      title: 'Freight',
+      logo: {
+        alt: 'Freight Logo',
+        src: 'img/logo.jpg',
+      },
       items: [
         {
           type: 'docSidebar',
