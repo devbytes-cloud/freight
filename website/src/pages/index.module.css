@@ -1,0 +1,74 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 6rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.heroTitle {
+  font-size: 4rem;
+  color: var(--ifm-color-primary);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.heroLogo {
+  height: 8rem;
+  width: auto;
+}
+
+.heroLogoSpacer {
+  height: 8rem;
+  width: 8rem; /* Match logo width if it's square, or use same value as logo height */
+  visibility: hidden;
+}
+
+.getStartedButton {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 1rem 2.5rem;
+  font-size: 1.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.getStartedButton:hover {
+  background-color: var(--ifm-color-primary-dark);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 112, 243, 0.3);
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+  .heroTitle {
+    font-size: 2.5rem;
+    flex-direction: column;
+  }
+  .heroLogo {
+    height: 6rem;
+  }
+  .heroLogoSpacer {
+    display: none;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

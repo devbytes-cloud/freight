@@ -26,9 +26,15 @@ func Execute() {
 // NewRootCmd creates and returns the root command for the CLI application.
 func NewRootCmd() *cobra.Command {
 	rootCmd := &cobra.Command{
+		Use:   "freight",
+		Short: "Freight is a zero-dependency Git hook manager.",
+		Long:  `Freight is a zero-dependency Git hook manager built in Go. It uses a Conductor binary and a Railcar manifest to manage Git hooks across your project.`,
+	}
+
+	initCmd := &cobra.Command{
 		Use:   "init",
-		Short: "init",
-		Long:  `init`,
+		Short: "Initialize Freight in the current repository",
+		Long:  `Initialize Freight by installing the Conductor binary, creating a starter Railcar manifest (railcar.json), and rewiring Git hooks.`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := validate.GitDirs(); err != nil {
 				cmd.PrintErrln(err)
@@ -51,7 +57,8 @@ func NewRootCmd() *cobra.Command {
 		},
 	}
 
-	rootCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
+	initCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
+	rootCmd.AddCommand(initCmd)
 
 	return rootCmd
 }
