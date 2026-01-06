@@ -71,6 +71,9 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: 'img/logo.jpg',
+    metadata: [
+      {name: 'keywords', content: 'git hooks, automation, workflow, productivity, go, developer tools'},
+    ],
     colorMode: {
       respectPrefersColorScheme: true,
     },
@@ -119,6 +122,10 @@ const config: Config = {
         {
           title: 'More',
           items: [
+            {
+              label: 'Official Website',
+              href: 'https://freightapp.co',
+            },
             {
               label: 'GitHub',
               href: 'https://github.com/devbytes-cloud/freight',

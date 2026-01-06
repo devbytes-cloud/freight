@@ -5,6 +5,8 @@
 
 **The professional, zero-dependency Git hook manager for modern teams.**
 
+Read the full documentation at [freightapp.co](https://freightapp.co).
+
 Freight streamlines Git workflows by rewiring every Git hook in your repository to a single **Conductor** binary. All logic is defined in a declarative **Railcar** manifest (`railcar.json`), ensuring your hooks are portable, fast, and easy to manage.
 
 ## Why Freight?
@@ -58,7 +60,7 @@ When a Git hook fires, the Conductor extracts the logic from the Railcar and exe
 
 ## Documentation
 
-For full documentation, recipes, and advanced configuration, visit [freight.devbytes.cloud](https://freight.devbytes.cloud).
+For full documentation, recipes, and advanced configuration, visit [freightapp.co](https://freightapp.co).
 
 ## License
 
