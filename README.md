@@ -64,4 +64,4 @@ For full documentation, recipes, and advanced configuration, visit [freightapp.c
 
 ## License
 
-BSD-style. See `LICENSE` for full text.
+MIT. See `LICENSE` for full text.
