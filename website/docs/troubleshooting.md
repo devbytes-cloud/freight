@@ -32,9 +32,16 @@ You can pass secrets or custom paths into `railcar.json` commands using environm
 Example `railcar.json`:
 ```json
 {
-  "pre-push": [
-    "npm run deploy -- --token=$DEPLOY_TOKEN"
-  ]
+  "config": {
+    "commit-operations": {
+      "pre-commit": [
+        {
+          "name": "deploy-dry-run",
+          "command": "npm run deploy -- --dry-run --token=$DEPLOY_TOKEN"
+        }
+      ]
+    }
+  }
 }
 ```
 

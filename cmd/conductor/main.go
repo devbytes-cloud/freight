@@ -45,8 +45,6 @@ func main() {
 		if err != nil {
 			pterm.Fatal.Println("Error reading commit message file: ", err)
 		}
-
-		// Process the commit message
 		if len(cfg.RailCar.CommitOperations.CommitMsg) != 0 {
 			run(cfg.RailCar.CommitOperations.CommitMsg, string(commitMsg))
 		}

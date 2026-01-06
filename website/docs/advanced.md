@@ -14,10 +14,20 @@ Actions defined for a hook in `railcar.json` are executed **sequentially** in th
 
 ```json
 {
-  "pre-commit": [
-    "npm run lint",
-    "npm run test:unit"
-  ]
+  "config": {
+    "commit-operations": {
+      "pre-commit": [
+        {
+          "name": "lint",
+          "command": "npm run lint"
+        },
+        {
+          "name": "test",
+          "command": "npm run test:unit"
+        }
+      ]
+    }
+  }
 }
 ```
 
@@ -36,18 +46,25 @@ Be mindful of path separators and environment variable syntax differences betwee
 Some Git hooks receive input via stdin or arguments. Freight provides access to these through the `${HOOK_INPUT}` environment variable.
 
 #### Deep Dive into `${HOOK_INPUT}`
-For complex hooks like `pre-push` or `post-rewrite`, Git sends multiple lines of information. Freight captures this and makes it available to your commands.
+Freight captures hook arguments and makes them available to your commands.
 
-*   **pre-push**: Receives information about what is being pushed to which remote.
-*   **post-rewrite**: Receives information about rewritten commits (e.g., after an interactive rebase).
+*   **commit-msg**: Receives the path to the commit message file.
+*   **post-checkout**: Receives information about the previous and new HEAD.
 
 You can use `${HOOK_INPUT}` in your `railcar.json` commands to pass this data to your scripts:
 
 ```json
 {
-  "pre-push": [
-    "./scripts/validate-push.sh \"${HOOK_INPUT}\""
-  ]
+  "config": {
+    "commit-operations": {
+      "commit-msg": [
+        {
+          "name": "validate",
+          "command": "./scripts/validate-msg.sh \"${HOOK_INPUT}\""
+        }
+      ]
+    }
+  }
 }
 ```
 In your script, you can then parse this input to perform advanced validations based on the specific commits or branches being pushed.

@@ -22,12 +22,16 @@ Many Git hooks pass arguments to their scripts (e.g., `commit-msg` passes the pa
 **Example: Validating a commit message**
 ```json
 {
-  "commit-msg": [
-    { 
-      "name": "lint-message", 
-      "command": "grep -E '^(feat|fix|docs|style|refactor|test|chore): ' ${HOOK_INPUT}" 
+  "config": {
+    "commit-operations": {
+      "commit-msg": [
+        { 
+          "name": "lint-message", 
+          "command": "grep -E '^(feat|fix|docs|style|refactor|test|chore): ' ${HOOK_INPUT}" 
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
@@ -42,16 +46,20 @@ Run `golangci-lint` and tests before every commit.
 
 ```json
 {
-  "pre-commit": [
-    { 
-      "name": "lint", 
-      "command": "golangci-lint run ./..." 
-    },
-    { 
-      "name": "unit-tests", 
-      "command": "go test -v ./..." 
+  "config": {
+    "commit-operations": {
+      "pre-commit": [
+        { 
+          "name": "lint", 
+          "command": "golangci-lint run ./..." 
+        },
+        { 
+          "name": "unit-tests", 
+          "command": "go test -v ./..." 
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
@@ -60,26 +68,34 @@ Ensure every commit message follows the Conventional Commits specification witho
 
 ```json
 {
-  "commit-msg": [
-    { 
-      "name": "conventional-check", 
-      "command": "grep -E '^(feat|fix|chore|docs|refactor|test): .+' ${HOOK_INPUT}" 
+  "config": {
+    "commit-operations": {
+      "commit-msg": [
+        { 
+          "name": "conventional-check", 
+          "command": "grep -E '^(feat|fix|chore|docs|refactor|test): .+' ${HOOK_INPUT}" 
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
 ### Recipe: Security Scanning
-Scan for secrets before pushing code to the remote.
+Scan for secrets before every commit.
 
 ```json
 {
-  "pre-push": [
-    { 
-      "name": "gitleaks", 
-      "command": "gitleaks detect --source . -v" 
+  "config": {
+    "commit-operations": {
+      "pre-commit": [
+        { 
+          "name": "gitleaks", 
+          "command": "gitleaks detect --source . -v" 
+        }
+      ]
     }
-  ]
+  }
 }
 ```
 
@@ -90,8 +106,15 @@ Scan for secrets before pushing code to the remote.
 Freight supports the standard execution order for various Git operations:
 
 * **Commit**: `pre-commit` → `prepare-commit-msg` → `commit-msg` → `post-commit`
+* **Checkout**: `post-checkout`
+
+---
+
+## Unsupported Hooks (Planned)
+
+The following hooks are not yet supported but are on our roadmap:
+
 * **Merge**: `pre-merge-commit` → `post-merge`
 * **Rebase**: `pre-rebase` → `post-rewrite`
 * **Push**: `pre-push` → `update` → `post-update` → `post-receive`
-* **Checkout**: `pre-checkout` → `post-checkout`
 * **ApplyPatch**: `applypatch-msg` → `pre-applypatch` → `post-applypatch`
