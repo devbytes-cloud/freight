@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/devbytes-cloud/freight/internal/blueprint"
 	"github.com/devbytes-cloud/freight/internal/config"
@@ -14,6 +15,14 @@ import (
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
+
+var allowHooks = map[string]struct{}{
+	"pre-commit":         {},
+	"prepare-commit-msg": {},
+	"commit-msg":         {},
+	"post-commit":        {},
+	"post-checkout":      {},
+}
 
 // Execute runs the root command and handles any errors that occur during execution.
 func Execute() {
@@ -39,7 +48,20 @@ func NewRootCmd() *cobra.Command {
 			if err := validate.GitDirs(); err != nil {
 				cmd.PrintErrln(err)
 			}
-			if err := setupHooks(); err != nil {
+
+			ah, err := cmd.Flags().GetStringSlice("allow")
+			if err != nil {
+				cmd.PrintErrln(err)
+				os.Exit(1)
+			}
+
+			vh, err := validateAllowHooks(ah)
+			if err != nil {
+				cmd.PrintErrln(err)
+				os.Exit(1)
+			}
+
+			if err := setupHooks(vh); err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
 			}
@@ -59,6 +81,7 @@ func NewRootCmd() *cobra.Command {
 	}
 
 	initCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
+	initCmd.Flags().StringSliceP("allow", "a", []string{}, "Allow specific Git hooks to be installed. Valid options are pre-commit, prepare-commit-msg, commit-msg, post-commit, post-checkout")
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(versionCommand())
 
@@ -66,27 +89,34 @@ func NewRootCmd() *cobra.Command {
 }
 
 // setupHooks initializes and writes the Git hooks.
-func setupHooks() error {
+func setupHooks(allowedHooks map[string]struct{}) error {
 	pterm.DefaultSection.Println("Generating .git/hooks")
+	pterm.Debug.Printfln("Allowed hooks: %v", allowedHooks)
 
 	pterm.Info.Println("Writing Commit Hooks")
 	gitHooks := githooks.NewGitHooks()
 	for _, v := range gitHooks.Commit {
-		if err := writeConfig(&v); err != nil {
-			pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
-			return err
+		if _, ok := allowedHooks[v.Name]; ok {
+			if err := writeConfig(&v); err != nil {
+				pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
+				return err
+			}
+			pterm.Success.Println("✔ Hook written:", v.Name)
+		} else {
+			pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
 		}
-		pterm.Success.Println("✔ Hook written:", v.Name)
-
 	}
-
 	pterm.Info.Println("Writing Checkout Hooks")
 	for _, v := range gitHooks.Checkout {
-		if err := writeConfig(&v); err != nil {
-			pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
-			return err
+		if _, ok := allowedHooks[v.Name]; ok {
+			if err := writeConfig(&v); err != nil {
+				pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
+				return err
+			}
+			pterm.Success.Println("✔ Hook written:", v.Name)
+		} else {
+			pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
 		}
-		pterm.Success.Println("✔ Hook written:", v.Name)
 	}
 
 	return nil
@@ -141,4 +171,27 @@ func installBinary() error {
 	}
 	pterm.Success.Println("✔ Installed conductor successfully")
 	return nil
+}
+
+// validateAllowHooks validates the provided allow hooks and returns a map of valid hooks.
+func validateAllowHooks(allow []string) (map[string]struct{}, error) {
+	if len(allow) == 0 {
+		pterm.Debug.Println("No hooks provided, using default allowed hooks")
+		return allowHooks, nil
+	}
+
+	inputHooks := map[string]struct{}{}
+	var invalidHooks []string
+	for _, v := range allow {
+		if _, ok := allowHooks[v]; !ok {
+			invalidHooks = append(invalidHooks, v)
+		}
+		inputHooks[v] = struct{}{}
+	}
+
+	if len(invalidHooks) > 0 {
+		return nil, fmt.Errorf("invalid hook types: %s", strings.Join(invalidHooks, ", "))
+	}
+
+	return inputHooks, nil
 }
