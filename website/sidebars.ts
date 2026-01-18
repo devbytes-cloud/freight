@@ -16,6 +16,18 @@ const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     'introduction',
     'installation',
+    {
+      type: 'category',
+      label: 'CLI Reference',
+      link: {
+        type: 'doc',
+        id: 'cli/index',
+      },
+      items: [
+        'cli/init',
+        'cli/version',
+      ],
+    },
     'configuration',
     'advanced',
     'best-practices',

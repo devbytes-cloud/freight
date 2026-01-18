@@ -41,6 +41,7 @@ func NewRootCmd() *cobra.Command {
 			}
 			if err := setupHooks(); err != nil {
 				cmd.PrintErrln(err)
+				os.Exit(1)
 			}
 
 			configForce, err := cmd.Flags().GetBool("config-force")
@@ -59,6 +60,7 @@ func NewRootCmd() *cobra.Command {
 
 	initCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
 	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(versionCommand())
 
 	return rootCmd
 }
