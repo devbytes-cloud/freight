@@ -81,7 +81,7 @@ func NewRootCmd() *cobra.Command {
 	}
 
 	initCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
-	initCmd.Flags().StringSliceP("allow", "a", []string{}, "Allow specific Git hooks to be installed. Valid options are pre-commit, prepare-commit-msg, commit-msg, post-commit, post-checkout")
+	initCmd.Flags().StringSliceP("allow", "a", []string{}, "Specific Git hooks to install (default: all). Valid options: pre-commit, prepare-commit-msg, commit-msg, post-commit, post-checkout")
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(versionCommand())
 

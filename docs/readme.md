@@ -39,6 +39,10 @@ make build-all
 ```
 # Inside any existing Git repository
 freight init                   # installs conductor + railcar.json + rewired hooks
+
+# Optionally install only specific hooks
+freight init --allow pre-commit,post-checkout
+
 git add . && git commit -m "test"  # your new hooks will now fire
 ```
 
@@ -57,6 +61,7 @@ Need to overwrite an existing `railcar.json`?
 Global flags:
 
 * `-c, --config-force` – overwrite an existing `railcar.json`
+* `-a, --allow` – specific Git hooks to install (default: all). Valid options: `pre-commit`, `prepare-commit-msg`, `commit-msg`, `post-commit`, `post-checkout`
 * `-h, --help` – display help
 
 ---

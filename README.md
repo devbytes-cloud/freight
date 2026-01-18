@@ -43,6 +43,12 @@ freight init
 ```
 This installs the **Conductor** binary and creates a starter **Railcar** manifest (`railcar.json`).
 
+By default, Freight installs all supported Git hooks. You can use the `--allow` (or `-a`) flag to specify only the hooks you want:
+```bash
+freight init --allow pre-commit,commit-msg
+```
+Valid hooks are: `pre-commit`, `prepare-commit-msg`, `commit-msg`, `post-commit`, and `post-checkout`.
+
 ### 3. Verify
 Add a script to your `railcar.json` and watch it run on your next commit!
 
