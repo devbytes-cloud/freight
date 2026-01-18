@@ -2,6 +2,8 @@
 
 Brief overview of the Freight CLI. Freight is a blazing-fast Git hooks manager designed for speed and simplicity.
 
+For installation instructions, see the [Installation Guide](../installation.md).
+
 ## Available Commands
 
 | Command | Description |
