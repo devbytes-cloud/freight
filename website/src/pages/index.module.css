@@ -72,3 +72,18 @@
   align-items: center;
   justify-content: center;
 }
+
+.quickInstall {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.quickInstall code {
+  background-color: var(--ifm-code-background);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-primary);
+}

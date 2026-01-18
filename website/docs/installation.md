@@ -14,6 +14,24 @@ Install Freight as a Cask:
 brew install --cask devbytes-cloud/tap/freight
 ```
 
+#### One-liner Install (Linux/macOS/WSL)
+Install Freight directly with a single command:
+```bash
+curl -fsSL https://raw.githubusercontent.com/devbytes-cloud/freight/main/curl.sh | bash
+```
+
+**Custom Install Directory:** By default, Freight installs to `/usr/local/bin`. You can customize this:
+```bash
+INSTALL_DIR=~/.local/bin curl -fsSL https://raw.githubusercontent.com/devbytes-cloud/freight/main/curl.sh | bash
+```
+
+The installer script:
+- Auto-detects OS (Linux, macOS, Windows/MSYS)
+- Auto-detects architecture (x86_64, arm64, armv6)
+- Downloads the latest release from GitHub
+- Installs to the specified directory (default: `/usr/local/bin`)
+- May require `sudo` for system directories
+
 #### GitHub Releases
 You can also download the pre-compiled binaries directly from the [GitHub Releases](https://github.com/devbytes-cloud/freight/releases) page.
 

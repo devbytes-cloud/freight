@@ -29,6 +29,9 @@ function HomepageHeader() {
             Get Started
           </Link>
         </div>
+        <div className={styles.quickInstall}>
+          <code>curl -fsSL https://raw.githubusercontent.com/devbytes-cloud/freight/main/curl.sh | bash</code>
+        </div>
       </div>
     </header>
   );

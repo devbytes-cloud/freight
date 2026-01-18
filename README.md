@@ -43,6 +43,8 @@ Freight's 'Conductor/Railcar' architecture ensures that your hooks work identica
 ### 1. Install
 
 - **Homebrew (macOS):** `brew install --cask devbytes-cloud/tap/freight`
+- **One-liner Install (Linux/macOS):** `curl -fsSL https://raw.githubusercontent.com/devbytes-cloud/freight/main/curl.sh | bash`
+  - *Custom `INSTALL_DIR` (optional):* `INSTALL_DIR=~/.local/bin curl -fsSL ... | bash`
 - **Precompiled Binaries:** [GitHub Releases](https://github.com/devbytes-cloud/freight/releases)
 
 ### 2. Setup
