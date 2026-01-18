@@ -49,19 +49,19 @@ func NewRootCmd() *cobra.Command {
 				cmd.PrintErrln(err)
 			}
 
-			ah, err := cmd.Flags().GetStringSlice("allow")
+			userAllow, err := cmd.Flags().GetStringSlice("allow")
 			if err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
 			}
 
-			vh, err := validateAllowHooks(ah)
+			validatedAllow, err := validateAllowHooks(userAllow)
 			if err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
 			}
 
-			if err := setupHooks(vh); err != nil {
+			if err := setupHooks(validatedAllow); err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
 			}
