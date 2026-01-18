@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/devbytes-cloud/freight/compare/v0.1.0...v0.2.0) (2026-01-18)
+
+
+### Features
+
+* add version command ([#56](https://github.com/devbytes-cloud/freight/issues/56)) ([e5e769c](https://github.com/devbytes-cloud/freight/commit/e5e769cc714b0960f92c9a3c5d48fb028b922ba5))
+
 ## [0.1.0](https://github.com/devbytes-cloud/freight/compare/v0.1.0...v0.1.0) (2026-01-04)
 
 
