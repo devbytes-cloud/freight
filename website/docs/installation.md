@@ -54,14 +54,4 @@ git commit -m "Testing Freight"
 
 ---
 
-## Command-line Reference
-
-| Command        | Description                                 |
-|----------------|---------------------------------------------|
-| `freight init` | Bootstrap Freight in the current repository |
-| `freight help` | Show global or command-specific help        |
-
-### Global flags:
-
-* `-c, --config-force` – overwrite an existing `railcar.json`
-* `-h, --help` – display help
+For the complete CLI reference, see [CLI Reference](./cli/index.md).
