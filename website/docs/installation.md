@@ -40,6 +40,13 @@ This command performs the following actions:
 - Generates a starter **Railcar** manifest (`railcar.json`).
 - Rewires your `.git/hooks` to point to the Conductor.
 
+By default, Freight installs all supported Git hooks. You can use the `--allow` flag to specify only the hooks you want:
+```bash
+freight init --allow pre-commit,commit-msg
+```
+
+This is particularly useful for **incremental adoption**. If you already have a complex set of hooks and only want to move `pre-commit` to Freight for now, you can do so without affecting your other hooks.
+
 :::tip Pro-Tip
 For total team portability, **commit the `conductor` binary** directly to your repository. This ensures that every team member (and your CI/CD pipeline) can execute hooks immediately without needing to install the `freight` CLI tool themselves.
 :::
