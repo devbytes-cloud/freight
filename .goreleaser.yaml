@@ -32,6 +32,11 @@ builds:
     ignore:
       - goos: windows
         goarch: arm
+    ldflags:
+      - -s -w
+      - -X github.com/devbytes-cloud/freight/internal/commands.Version={{.Version}}
+      - -X github.com/devbytes-cloud/freight/internal/commands.Commit={{.Commit}}
+      - -X github.com/devbytes-cloud/freight/internal/commands.Date={{.Date}}
 archives:
   - formats: ['tar.gz']
     # this name template makes the OS and Arch compatible with the results of `uname`.
