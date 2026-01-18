@@ -42,14 +42,14 @@ func TestNewGitHooks(t *testing.T) {
 	assert.NotNil(t, hooksInstance, "NewGitHooks should not return nil")
 
 	// Test commit hooks
-	for _, hook := range hooksInstance.Commit {
+	for _, hook := range hooksInstance.Hooks["Commit"] {
 		expectedPath := filepath.Join(hooksBaseDir, hook.Name)
 		assert.Equal(t, expectedPath, hook.Path, "commit hook Path should match expected")
 		assert.Equal(t, gitHookTemplate, hook.Template, "commit hook Template should match gitHookTemplate")
 	}
 
 	// Test checkout hooks
-	for _, hook := range hooksInstance.Checkout {
+	for _, hook := range hooksInstance.Hooks["Checkout"] {
 		expectedPath := filepath.Join(hooksBaseDir, hook.Name)
 		assert.Equal(t, expectedPath, hook.Path, "checkout hook Path should match expected")
 		assert.Equal(t, gitHookTemplate, hook.Template, "checkout hook Template should match gitHookTemplate")

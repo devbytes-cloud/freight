@@ -93,29 +93,19 @@ func setupHooks(allowedHooks map[string]struct{}) error {
 	pterm.DefaultSection.Println("Generating .git/hooks")
 	pterm.Debug.Printfln("Allowed hooks: %v", allowedHooks)
 
-	pterm.Info.Println("Writing Commit Hooks")
 	gitHooks := githooks.NewGitHooks()
-	for _, v := range gitHooks.Commit {
-		if _, ok := allowedHooks[v.Name]; ok {
-			if err := writeConfig(&v); err != nil {
-				pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
-				return err
+	for hookName, hookGroup := range gitHooks.Hooks {
+		pterm.Info.Println("Writing", hookName, "Hooks")
+		for _, v := range hookGroup {
+			if _, ok := allowedHooks[v.Name]; ok {
+				if err := writeConfig(&v); err != nil {
+					pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
+					return err
+				}
+				pterm.Success.Println("✔ Hook written:", v.Name)
+			} else {
+				pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
 			}
-			pterm.Success.Println("✔ Hook written:", v.Name)
-		} else {
-			pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
-		}
-	}
-	pterm.Info.Println("Writing Checkout Hooks")
-	for _, v := range gitHooks.Checkout {
-		if _, ok := allowedHooks[v.Name]; ok {
-			if err := writeConfig(&v); err != nil {
-				pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
-				return err
-			}
-			pterm.Success.Println("✔ Hook written:", v.Name)
-		} else {
-			pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
 		}
 	}
 

@@ -7,10 +7,10 @@ import (
 // hooksBaseDir is the base directory for Git hooks
 const hooksBaseDir = ".git/hooks"
 
-// GitHooks contains an array of GitHook
+// GitHooks represents a collection of Git hooks, each defined by a name, path, and script template.
 type GitHooks struct {
-	Commit   []GitHook
-	Checkout []GitHook
+	// Hooks is a slice of GitHook representing configured Git hooks with their names, paths, and templates.
+	Hooks map[string][]GitHook
 }
 
 // GitHook represents a Git hook with its name, path, and template
@@ -25,9 +25,13 @@ type GitHook struct {
 
 // NewGitHooks returns a pointer to a GitHooks instance with commit hooks initialized
 func NewGitHooks() *GitHooks {
+	hooks := map[string][]GitHook{
+		"Commit":   generateHooks(getCommitHook()),
+		"Checkout": generateHooks(getCheckoutHooks()),
+	}
+
 	return &GitHooks{
-		Commit:   generateHooks(getCommitHook()),
-		Checkout: generateHooks(getCheckoutHooks()),
+		Hooks: hooks,
 	}
 }
 
