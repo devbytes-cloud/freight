@@ -27,7 +27,8 @@ const (
 	windowsARM64 string = "windows-arm64"
 )
 
-// WriteBinary will install conductor into your working directory
+// WriteBinary installs the conductor binary into the current working directory.
+// It detects the system's OS and architecture to select the appropriate binary.
 func WriteBinary() error {
 	systemInfo := fmt.Sprintf("%s-%s", fetchOS(), fetchArch())
 	binary := fetchBinary(systemInfo)
@@ -44,7 +45,7 @@ func WriteBinary() error {
 	return nil
 }
 
-// fetchBinary will return the proper conductor binary for your system
+// fetchBinary returns the appropriate conductor binary for the given system information.
 func fetchBinary(systemInfo string) []byte {
 	switch systemInfo {
 	case macOSSilicon:
@@ -66,12 +67,12 @@ func fetchBinary(systemInfo string) []byte {
 	}
 }
 
-// fetchOS returns the current os that is running
+// fetchOS returns the current operating system (runtime.GOOS).
 func fetchOS() string {
 	return runtime.GOOS
 }
 
-// fetchArch returns the current architecture that is running
+// fetchArch returns the current architecture (runtime.GOARCH).
 func fetchArch() string {
 	return runtime.GOARCH
 }

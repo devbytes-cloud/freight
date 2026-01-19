@@ -6,6 +6,7 @@ import (
 	"github.com/devbytes-cloud/freight/internal/validate"
 )
 
+// NewGitHook creates a new BluePrint for a specific Git hook.
 func NewGitHook(gh *githooks.GitHook) (*BluePrint, error) {
 	dir, err := validate.CurrentWD()
 	if err != nil {

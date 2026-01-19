@@ -84,6 +84,7 @@ func main() {
 	//•	Applypatch Hooks Order: applypatch-msg → pre-applypatch → post-applypatch
 }
 
+// run executes a sequence of hook steps with the provided hook data.
 func run(data []config.HookStep, hookData string) {
 	for _, v := range data {
 		pterm.Info.Println(fmt.Sprintf("Name: %s", v.Name))
@@ -111,10 +112,12 @@ func run(data []config.HookStep, hookData string) {
 	}
 }
 
+// printCurrentHook prints the name of the Git hook currently being executed.
 func printCurrentHook(hook string) {
 	pterm.DefaultSection.Println("Running hook:", hook)
 }
 
+// ptermWriter is an io.Writer that routes its output through pterm.
 type ptermWriter struct {
 	printFunc func(...any)
 }

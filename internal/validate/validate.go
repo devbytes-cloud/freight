@@ -14,7 +14,7 @@ var (
 	gitHookDir = filepath.Join(gitDir, "hooks")
 )
 
-// GitDirs checks to see if there is a valid .git file in the repo
+// GitDirs verifies if the current directory contains a valid .git directory and the hooks subdirectory.
 func GitDirs() error {
 	if _, err := os.Stat(gitDir); err != nil {
 		return fmt.Errorf(".git directory missing: %w", err)
@@ -26,7 +26,7 @@ func GitDirs() error {
 	return nil
 }
 
-// CurrentWD returns the current directory that you are in
+// CurrentWD returns the absolute path of the current working directory.
 func CurrentWD() (string, error) {
 	dir, err := os.Getwd()
 	if err != nil {

@@ -23,7 +23,7 @@ type GitHook struct {
 	Template string
 }
 
-// NewGitHooks returns a pointer to a GitHooks instance with commit hooks initialized
+// NewGitHooks returns a pointer to a GitHooks instance with commit and checkout hooks initialized.
 func NewGitHooks() *GitHooks {
 	hooks := map[string][]GitHook{
 		"Commit":   generateHooks(getCommitHook()),
