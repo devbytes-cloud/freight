@@ -55,3 +55,23 @@ func TestNewGitHooks(t *testing.T) {
 		assert.Equal(t, gitHookTemplate, hook.Template, "checkout hook Template should match gitHookTemplate")
 	}
 }
+
+// TestAllowedGitHooks verifies that AllowedGitHooks returns the expected map of allowed Git hooks.
+func TestAllowedGitHooks(t *testing.T) {
+	allowedHooks := AllowedGitHooks()
+
+	expectedHooks := []string{
+		PreCommit,
+		PrepareCommitMsg,
+		CommitMsg,
+		PostCommit,
+		PostCheckout,
+	}
+
+	assert.Len(t, allowedHooks, len(expectedHooks), "AllowedGitHooks should return the correct number of hooks")
+
+	for _, hook := range expectedHooks {
+		_, exists := allowedHooks[hook]
+		assert.True(t, exists, "Hook %s should be in the allowed hooks map", hook)
+	}
+}

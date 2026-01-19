@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
+
+	"github.com/devbytes-cloud/freight/internal/githooks"
+	"github.com/pterm/pterm"
 )
 
 var (
@@ -34,4 +38,29 @@ func CurrentWD() (string, error) {
 	}
 
 	return dir, nil
+}
+
+// GitHooks validates the provided allow hooks and returns a map of valid hooks.
+func GitHooks(allow []string) (map[string]struct{}, error) {
+	allowedGitHooks := githooks.AllowedGitHooks()
+	if len(allow) == 0 {
+		pterm.Debug.Println("No hooks provided, using default allowed hooks")
+		return allowedGitHooks, nil
+	}
+
+	inputHooks := map[string]struct{}{}
+	var invalidHooks []string
+	for _, v := range allow {
+		if _, ok := allowedGitHooks[v]; !ok {
+			invalidHooks = append(invalidHooks, v)
+			continue
+		}
+		inputHooks[v] = struct{}{}
+	}
+
+	if len(invalidHooks) > 0 {
+		return nil, fmt.Errorf("invalid hook types: %s", strings.Join(invalidHooks, ", "))
+	}
+
+	return inputHooks, nil
 }
