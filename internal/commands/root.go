@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 
 	"github.com/devbytes-cloud/freight/internal/blueprint"
 	"github.com/devbytes-cloud/freight/internal/config"
@@ -17,14 +16,6 @@ import (
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
-
-var allowHooks = map[string]struct{}{
-	"pre-commit":         {},
-	"prepare-commit-msg": {},
-	"commit-msg":         {},
-	"post-commit":        {},
-	"post-checkout":      {},
-}
 
 // Execute runs the root command and handles any errors that occur during execution.
 func Execute() {
@@ -84,7 +75,7 @@ func NewRootCmd() *cobra.Command {
 			} else if len(freightConfig.Allow) == 0 {
 				// If no user allow and no existing allow, use default all hooks
 				var allHooks []string
-				for h := range allowHooks {
+				for h := range githooks.AllowedGitHooks() {
 					allHooks = append(allHooks, h)
 				}
 				sort.Strings(allHooks)
@@ -98,7 +89,7 @@ func NewRootCmd() *cobra.Command {
 			pterm.Debug.Printfln("Effective allow: %v", freightConfig.Allow)
 			pterm.Debug.Printfln("Hooks to setup: %v", hooksToSetup)
 
-			validatedAllow, err := validateAllowHooks(hooksToSetup)
+			validatedAllow, err := validate.GitHooks(hooksToSetup)
 			if err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
@@ -223,27 +214,4 @@ func installBinary() error {
 	}
 	pterm.Success.Println("✔ Installed conductor successfully")
 	return nil
-}
-
-// validateAllowHooks validates the provided allow hooks and returns a map of valid hooks.
-func validateAllowHooks(allow []string) (map[string]struct{}, error) {
-	if len(allow) == 0 {
-		pterm.Debug.Println("No hooks provided, using default allowed hooks")
-		return allowHooks, nil
-	}
-
-	inputHooks := map[string]struct{}{}
-	var invalidHooks []string
-	for _, v := range allow {
-		if _, ok := allowHooks[v]; !ok {
-			invalidHooks = append(invalidHooks, v)
-		}
-		inputHooks[v] = struct{}{}
-	}
-
-	if len(invalidHooks) > 0 {
-		return nil, fmt.Errorf("invalid hook types: %s", strings.Join(invalidHooks, ", "))
-	}
-
-	return inputHooks, nil
 }

@@ -53,3 +53,21 @@ func generateHooks(hook []string) []GitHook {
 func hookPath(hookType string) string {
 	return filepath.Join(hooksBaseDir, hookType)
 }
+
+// AllowedGitHooks returns a slice of allowed Git hook types.
+func AllowedGitHooks() map[string]struct{} {
+	checkout := getCheckoutHooks()
+	commit := getCommitHook()
+
+	allowedHooks := make(map[string]struct{}, len(checkout)+len(commit))
+
+	for _, hook := range checkout {
+		allowedHooks[hook] = struct{}{}
+	}
+
+	for _, hook := range commit {
+		allowedHooks[hook] = struct{}{}
+	}
+
+	return allowedHooks
+}
