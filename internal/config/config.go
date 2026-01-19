@@ -25,12 +25,13 @@ type CommitOperations struct {
 	PrepareCommitMsg []HookStep `json:"prepare-commit-msg,omitempty"`
 	// CommitMsg This hook is called after the user has edited the commit message. It’s used to validate or enforce specific commit message formats. If it exits non-zero, the commit is aborted.
 	CommitMsg []HookStep `json:"commit-msg,omitempty"`
-	// CommitMsgPass This hook is
+	// CommitMsgPass This hook is called after a commit message is accepted.
 	CommitMsgPass []HookStep `json:"commit-msg-pass,omitempty"`
 	// PostCommit This hook is invoked after a commit is made. It cannot affect the commit process but can be used for notifications or logging.
 	PostCommit []HookStep `json:"post-commit,omitempty"`
 }
 
+// CheckoutOperation represents the configuration for checkout-related Git operations.
 type CheckoutOperation struct {
 	// PostCheckout represents the steps to be executed after a checkout operation is completed.
 	PostCheckout []HookStep `json:"post-checkout"`
@@ -52,4 +53,12 @@ type HookStep struct {
 	// It defines the particular operation that should be performed during this step
 	// of the Git hook process.
 	Command string `json:"command"`
+}
+
+// FreightConfig represents the configuration stored in .git/hooks/.fingerprint.yaml.
+type FreightConfig struct {
+	// Version is the version of Freight used to initialize the repo.
+	Version string `yaml:"version" json:"version"`
+	// Allow is the list of allowed Git hooks.
+	Allow []string `yaml:"allow" json:"allow"`
 }

@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'cli/init',
+        'cli/status',
         'cli/version',
       ],
     },

@@ -17,7 +17,7 @@ type BluePrint struct {
 	Data string
 }
 
-// NewBluePrint generates a new blueprint to be used for write to the filesystem
+// NewBluePrint generates a new blueprint to be used for writing to the filesystem.
 func NewBluePrint(name, writePath, data string, values any) *BluePrint {
 	return &BluePrint{
 		Name:      name,
@@ -27,12 +27,12 @@ func NewBluePrint(name, writePath, data string, values any) *BluePrint {
 	}
 }
 
-// Exists allows you to check if the file within the blueprint exists
+// Exists checks if the file specified in the blueprint already exists on the filesystem.
 func (b *BluePrint) Exists() (os.FileInfo, error) {
 	return os.Stat(b.WritePath)
 }
 
-// Write takes the BluePrint data then templates it out to the filesystem
+// Write renders the BluePrint's template data with its values and writes the result to the filesystem at WritePath.
 func (b *BluePrint) Write() error {
 	tmpl := template.Must(template.New(b.Name).Parse(b.Data))
 	file, err := os.OpenFile(b.WritePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o755)

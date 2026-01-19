@@ -9,6 +9,7 @@ For installation instructions, see the [Installation Guide](../installation.md).
 | Command | Description |
 | :--- | :--- |
 | [`init`](./init.md) | Bootstrap Freight in the current repository. |
+| [`status`](./status.md) | Report the current state of Freight in the repository. |
 | [`version`](./version.md) | Print version information. |
 | `help` | Show help for any command. |
 
