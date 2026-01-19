@@ -73,13 +73,15 @@ func TestInitMergeAllow(t *testing.T) {
 
 	t.Run("Only specified hooks are initialized with --allow", func(t *testing.T) {
 		// Clean up and start fresh
-		os.RemoveAll(".git/hooks")
-		os.MkdirAll(".git/hooks", 0o755)
+		err := os.RemoveAll(".git/hooks")
+		require.NoError(t, err)
+		err = os.MkdirAll(".git/hooks", 0o755)
+		require.NoError(t, err)
 
 		// 1. Init with pre-commit
 		cmd := NewRootCmd()
 		cmd.SetArgs([]string{"init", "--allow", "pre-commit"})
-		err := cmd.Execute()
+		err = cmd.Execute()
 		require.NoError(t, err)
 
 		require.FileExists(t, ".git/hooks/pre-commit")
@@ -88,7 +90,8 @@ func TestInitMergeAllow(t *testing.T) {
 
 		// 2. Init with post-commit. It should NOT re-initialize pre-commit (though pre-commit should still exist if it was there)
 		// To truly test it ONLY runs post-commit, we can delete pre-commit and see if it comes back.
-		os.Remove(".git/hooks/pre-commit")
+		err = os.Remove(".git/hooks/pre-commit")
+		require.NoError(t, err)
 
 		cmd = NewRootCmd()
 		cmd.SetArgs([]string{"init", "--allow", "post-commit"})

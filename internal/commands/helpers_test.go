@@ -23,8 +23,8 @@ func withTempGitDir(t *testing.T) (string, func()) {
 	require.NoError(t, err)
 
 	cleanup := func() {
-		os.Chdir(origWd)
-		os.RemoveAll(tmpDir)
+		_ = os.Chdir(origWd)
+		_ = os.RemoveAll(tmpDir)
 	}
 
 	return tmpDir, cleanup

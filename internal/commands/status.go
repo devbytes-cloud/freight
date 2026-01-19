@@ -121,7 +121,7 @@ func statusCommand() *cobra.Command {
 				})
 			}
 
-			pterm.DefaultTable.WithHasHeader().WithData(hooksData).Render()
+			_ = pterm.DefaultTable.WithHasHeader().WithData(hooksData).Render()
 		},
 	}
 
