@@ -1,4 +1,4 @@
-# Advanced Configuration
+npm # Advanced Configuration
 
 Take full control of your Git hooks with advanced configuration options and deep dives into Freight's execution model.
 

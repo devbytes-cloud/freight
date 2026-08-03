@@ -38,7 +38,7 @@ const FeatureList: FeatureItem[] = [
     iconColor: '#0070f3',
     description: (
       <>
-        Commit the Conductor binary directly to your repository. New team members and CI/CD pipelines instantly inherit your full suite of hooks without installing global tools.
+        New team members and CI/CD pipelines instantly inherit your full suite of hooks without installing global tools.
       </>
     ),
   },
