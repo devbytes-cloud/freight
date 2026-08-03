@@ -65,9 +65,6 @@ freight init --allow pre-commit,commit-msg
 
 This is particularly useful for **incremental adoption**. If you already have a complex set of hooks and only want to move `pre-commit` to Freight for now, you can do so without affecting your other hooks.
 
-:::tip Pro-Tip
-For total team portability, **commit the `conductor` binary** directly to your repository. This ensures that every team member (and your CI/CD pipeline) can execute hooks immediately without needing to install the `freight` CLI tool themselves.
-:::
 
 ### 3. Verify
 Add a simple command to your `railcar.json` and trigger a hook:
