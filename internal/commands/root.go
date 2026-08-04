@@ -48,6 +48,12 @@ func NewRootCmd() *cobra.Command {
 				os.Exit(1)
 			}
 
+			quietMode, err := cmd.Flags().GetBool("quiet")
+			if err != nil {
+				pterm.Error.Println(err)
+				os.Exit(1)
+			}
+
 			fingerprintPath := ".git/hooks/.fingerprint.yaml"
 
 			var freightConfig config.FreightConfig
@@ -95,7 +101,7 @@ func NewRootCmd() *cobra.Command {
 				os.Exit(1)
 			}
 
-			if err := setupHooks(validatedAllow); err != nil {
+			if err := setupHooks(validatedAllow, quietMode); err != nil {
 				cmd.PrintErrln(err)
 				os.Exit(1)
 			}
@@ -105,10 +111,10 @@ func NewRootCmd() *cobra.Command {
 				cmd.PrintErrln(err)
 			}
 
-			if err := setupConfig(configForce); err != nil {
+			if err := setupConfig(configForce, quietMode); err != nil {
 				cmd.PrintErrln(err)
 			}
-			if err := installBinary(); err != nil {
+			if err := installBinary(quietMode); err != nil {
 				cmd.PrintErrln(err)
 			}
 
@@ -116,22 +122,28 @@ func NewRootCmd() *cobra.Command {
 			freightConfig.Version = Version
 			data, err := yaml.Marshal(freightConfig)
 			if err == nil {
-				pterm.DefaultSection.Println("Writing fingerprint file")
+				if !quietMode {
+					pterm.DefaultSection.Println("Writing fingerprint file")
+				}
 				comment := "# This file is managed by Freight. It keeps track of the version and allowed hooks.\n"
 				finalData := append([]byte(comment), data...)
 				if err := os.WriteFile(fingerprintPath, finalData, 0o644); err != nil {
 					pterm.Error.Printfln("✖ Failed to write fingerprint: %v", err)
 				} else {
-					pterm.Success.Printfln("✔ Fingerprint .fingerprint.yaml successfully written to .git/hooks")
+					if !quietMode {
+						pterm.Success.Printfln("✔ Fingerprint .fingerprint.yaml successfully written to .git/hooks")
+					}
 				}
 			}
-
-			pterm.Success.Println("Freight initialized successfully!")
+			if !quietMode {
+				pterm.Success.Println("Freight initialized successfully!")
+			}
 		},
 	}
 
 	initCmd.Flags().BoolP("config-force", "c", false, "If you wish to force write the config")
 	initCmd.Flags().StringSliceP("allow", "a", []string{}, "Specific Git hooks to install (default: all). Valid options: pre-commit, prepare-commit-msg, commit-msg, post-commit, post-checkout")
+	initCmd.Flags().BoolP("quiet", "q", false, "Quiet mode, will only display errors")
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(statusCommand())
 	rootCmd.AddCommand(versionCommand())
@@ -141,22 +153,30 @@ func NewRootCmd() *cobra.Command {
 
 // setupHooks initializes and writes the Git hooks to the .git/hooks directory.
 // It only writes the hooks that are included in the allowedHooks map.
-func setupHooks(allowedHooks map[string]struct{}) error {
-	pterm.DefaultSection.Println("Generating .git/hooks")
-	pterm.Debug.Printfln("Allowed hooks: %v", allowedHooks)
+func setupHooks(allowedHooks map[string]struct{}, quiteMode bool) error {
+	if !quiteMode {
+		pterm.DefaultSection.Println("Generating .git/hooks")
+		pterm.Debug.Printfln("Allowed hooks: %v", allowedHooks)
+	}
 
 	gitHooks := githooks.NewGitHooks()
 	for hookName, hookGroup := range gitHooks.Hooks {
-		pterm.Info.Println("Writing", hookName, "Hooks")
+		if !quiteMode {
+			pterm.Info.Println("Writing", hookName, "Hooks")
+		}
 		for _, v := range hookGroup {
 			if _, ok := allowedHooks[v.Name]; ok {
 				if err := writeConfig(&v); err != nil {
 					pterm.Error.Println("✖ Hook write failed for: ", v.Name, err.Error())
 					return err
 				}
-				pterm.Success.Println("✔ Hook written:", v.Name)
+				if !quiteMode {
+					pterm.Success.Println("✔ Hook written:", v.Name)
+				}
 			} else {
-				pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
+				if !quiteMode {
+					pterm.Warning.Println("Skipping hook:", v.Name, "not allowed")
+				}
 			}
 		}
 	}
@@ -179,15 +199,19 @@ func writeConfig(v *githooks.GitHook) error {
 
 // setupConfig initializes the Railcar configuration file (railcar.json).
 // If forceWrite is true, it overwrites any existing configuration.
-func setupConfig(forceWrite bool) error {
-	pterm.DefaultSection.Println("Writing config file")
+func setupConfig(forceWrite, quiteMode bool) error {
+	if !quiteMode {
+		pterm.DefaultSection.Println("Writing config file")
+	}
 
 	config := blueprint.NewBluePrint("railcar.json", "railcar.json", config.RailcarJson, nil)
 
 	if !forceWrite {
 		_, err := config.Exists()
 		if err == nil {
-			pterm.Warning.Println("⚠ Config railcar.json already exists, will not overwrite unless specified")
+			if !quiteMode {
+				pterm.Warning.Println("⚠ Config railcar.json already exists, will not overwrite unless specified")
+			}
 		} else if errors.Is(err, os.ErrNotExist) {
 			forceWrite = true
 		}
@@ -198,20 +222,26 @@ func setupConfig(forceWrite bool) error {
 			pterm.Error.Println("✖ Failed to write Config railcar.json: ", err.Error())
 			return err
 		}
-		pterm.Success.Println("✔ Config railcar.json successfully written")
+		if !quiteMode {
+			pterm.Success.Println("✔ Config railcar.json successfully written")
+		}
 	}
 
 	return nil
 }
 
 // installBinary extracts and writes the embedded Conductor binary to the current directory.
-func installBinary() error {
-	pterm.DefaultSection.Println("Installing Conductor binary")
+func installBinary(quiteMode bool) error {
+	if !quiteMode {
+		pterm.DefaultSection.Println("Installing Conductor binary")
+	}
 	err := embed.WriteBinary()
 	if err != nil {
 		pterm.Error.Println("✖ Failed to install Conductor: ", err.Error())
 		return err
 	}
-	pterm.Success.Println("✔ Installed conductor successfully")
+	if !quiteMode {
+		pterm.Success.Println("✔ Installed conductor successfully")
+	}
 	return nil
 }
