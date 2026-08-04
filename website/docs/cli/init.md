@@ -17,6 +17,7 @@ The `init` command sets up Freight in your local repository. It ensures all nece
 - `-a, --allow`: Specific Git hooks to install (default: all). Valid options: `pre-commit`, `prepare-commit-msg`, `commit-msg`, `post-commit`, `post-checkout`.
     
     When this flag is used, Freight will **only** rewire the hooks you explicitly specify. Any existing hooks in your `.git/hooks` directory that are NOT in the allow list will remain untouched. This is useful if you want to use Freight alongside other hook managers or if you only want to manage a subset of hooks with Freight.
+- `-q, --quiet`: Quiet mode, will only display errors. Suppresses informational and success output during initialization.
 
 ## Examples
 
@@ -33,6 +34,11 @@ freight init --allow pre-commit,commit-msg
 Initialize with specific hooks (multiple flags):
 ```bash
 freight init -a pre-commit -a post-checkout
+```
+
+Initialize in quiet mode (only errors are printed):
+```bash
+freight init --quiet
 ```
 
 **Output:**
