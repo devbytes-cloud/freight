@@ -1,6 +1,6 @@
 module github.com/devbytes-cloud/freight
 
-go 1.24.2
+go 1.26.5
 
 require (
 	github.com/pterm/pterm v0.12.83
