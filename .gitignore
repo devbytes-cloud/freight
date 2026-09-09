@@ -2,7 +2,12 @@ railcar
 freight
 railcar.json
 conductor
+.idea/
 
 # Parser build output for binaries
 /assets/dist/
 dist/
+
+
+# Flox
+result**

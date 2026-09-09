@@ -1,0 +1,34 @@
+schema-version = "1.14.0"
+
+
+[install]
+go.pkg-path = "go"
+git.pkg-path = "git"
+jq.pkg-path = "jq"
+gnumake.pkg-path = "gnumake"
+goreleaser.pkg-path = "goreleaser"
+tzdata.pkg-path = "tzdata"
+iana-etc.pkg-path = "iana-etc"
+
+
+[build]
+
+[build.freight]
+sandbox = "off"
+description = "Zero-dependency Git hook orchestrator driven by a declarative JSON manifest"
+version.command = "jq -r '.\".\"' .release-please-manifest.json"
+runtime-packages = ["tzdata", "iana-etc"]
+command = '''
+  goreleaser build --single-target --snapshot --clean
+
+  mkdir -p "$out/bin"
+  cp dist/freight_*/freight "$out/bin/freight"
+  chmod +x "$out/bin/freight"
+'''
+
+[options]
+systems = [
+  "aarch64-darwin",
+  "aarch64-linux",
+  "x86_64-linux",
+]

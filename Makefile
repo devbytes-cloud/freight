@@ -5,6 +5,10 @@ build-freight:
 .Phony: build-all
 build-all: conductor-build-binaries build-freight
 
+.Phony: flox-build
+flox-build:
+	flox build freight
+
 .Phony: conductor-build-binaries
 conductor-build-binaries:
 	goreleaser release --snapshot --clean --config=./assets/.goreleaser.yaml
