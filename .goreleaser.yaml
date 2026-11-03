@@ -70,14 +70,12 @@ homebrew_casks:
     homepage: "https://github.com/devbytes-cloud/freight"
     description: "Freight is a zero-dependency Git hook orchestrator that replaces fragile scripts with a high-performance Go binary and a single, declarative JSON manifest."
     license: "MIT"
-    url:
-      verified: github.com/devbytes-cloud/freight
 
     hooks:
       post:
-        install: |
-          if OS.mac?
-            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/freight"]
+        install_steps: |
+          if on_macos?
+            run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{ .StagedPath }}/freight"]
           end
 
     repository:
