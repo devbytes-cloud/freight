@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/devbytes-cloud/freight/compare/v0.4.0...v0.5.0) (2026-11-03)
+
+
+### Features
+
+* **go:** bump go to 1.27.3 ([#97](https://github.com/devbytes-cloud/freight/issues/97)) ([c82bf63](https://github.com/devbytes-cloud/freight/commit/c82bf63db8ee682618a0d1ae9da3ea305124fdf3))
+
+
+### Dependencies
+
+* **renovate:** update config ([031cdc5](https://github.com/devbytes-cloud/freight/commit/031cdc5f756e0aa1954eadc274add0192160f037))
+
 ## [0.4.0](https://github.com/devbytes-cloud/freight/compare/v0.3.0...v0.4.0) (2026-08-05)
 
 
