@@ -1,7 +1,7 @@
 {
   "lockfile-version": 1,
   "manifest": {
-    "schema-version": "1.14.0",
+    "schema-version": "1.13.0",
     "install": {
       "git": {
         "pkg-path": "git"
@@ -10,7 +10,9 @@
         "pkg-path": "gnumake"
       },
       "go": {
-        "pkg-path": "go"
+        "pkg-path": "flox/go",
+        "pkg-group": "go",
+        "version": "1.27.3"
       },
       "goreleaser": {
         "pkg-path": "goreleaser"
@@ -51,28 +53,29 @@
     {
       "attr_path": "git",
       "broken": false,
-      "derivation": "/nix/store/wwxphpil01qgaad46jsvqs26j9mfzpcz-git-2.55.0.drv",
+      "derivation": "/nix/store/67qqszzb9di8igr08n8jdyr3gppfdcqh-git-2.56.0.drv",
       "description": "Distributed version control system",
       "install_id": "git",
-      "license": "GPL-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "git-2.55.0",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "git-2.56.0",
       "pname": "git",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:27.467202Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.246682Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2.55.0",
+      "version": "2.56.0",
       "outputs_to_install": [
+        "out",
         "out"
       ],
       "outputs": {
-        "doc": "/nix/store/y34pxb3x3h1gyvcfvanqlfjzm0c86cb4-git-2.55.0-doc",
-        "out": "/nix/store/rim5n939lwjc8mah63ld1q31i6n7bvf0-git-2.55.0"
+        "doc": "/nix/store/159hwqisk9nsymhk2w3df9z8dqk9j81c-git-2.56.0-doc",
+        "out": "/nix/store/3yd3064192bxb2kbf87fr4lam7ncazcw-git-2.56.0"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -81,29 +84,30 @@
     {
       "attr_path": "git",
       "broken": false,
-      "derivation": "/nix/store/awjgry0bp70mykwb0ph58nw4ishs66zb-git-2.55.0.drv",
+      "derivation": "/nix/store/mkkd8s7dk1xiy7mwnzn1ir3jll7d1dr8-git-2.56.0.drv",
       "description": "Distributed version control system",
       "install_id": "git",
-      "license": "GPL-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "git-2.55.0",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "git-2.56.0",
       "pname": "git",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:37.078960Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.417099Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2.55.0",
+      "version": "2.56.0",
       "outputs_to_install": [
+        "out",
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/nsck4ncjjmdy8c5h83yw297c7xxv64xx-git-2.55.0-debug",
-        "doc": "/nix/store/bz8bdi34lg4w10kxs9bm93658ary5rrz-git-2.55.0-doc",
-        "out": "/nix/store/v2iradivx07xjqwk2q71i57pwxw6wh4g-git-2.55.0"
+        "debug": "/nix/store/g2ckab3z3shck8y5mwxj5kw13wrxpycc-git-2.56.0-debug",
+        "doc": "/nix/store/ddvy66njv88c3zgzgkvxfkm4r0za2rza-git-2.56.0-doc",
+        "out": "/nix/store/xqp1x3qm8j8hxqpddwzp9mg73wvrc4xb-git-2.56.0"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -112,29 +116,31 @@
     {
       "attr_path": "git",
       "broken": false,
-      "derivation": "/nix/store/r1lgs9xs6pxv7d5xmlr7m1fpjhzyg7ar-git-2.55.0.drv",
+      "derivation": "/nix/store/lsklxr7k7vs2qja22qr2gp4z2h97hblx-git-2.56.0.drv",
       "description": "Distributed version control system",
       "install_id": "git",
-      "license": "GPL-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "git-2.55.0",
+      "license": "GPL-2.0-only",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "git-2.56.0",
       "pname": "git",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:14:58.661988Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:53.770036Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2.55.0",
+      "version": "2.56.0",
       "outputs_to_install": [
+        "out",
+        "out",
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/rwiamhfaqkns90xsalafayg01afk3pza-git-2.55.0-debug",
-        "doc": "/nix/store/bddpyi6cgkp3v8f58i900hymgfvkyag5-git-2.55.0-doc",
-        "out": "/nix/store/6f0qqak4qbcrbw4f750phr88c9yhpf5s-git-2.55.0"
+        "debug": "/nix/store/ikya2nngp99gs78x3i4fv7fmj4x182ar-git-2.56.0-debug",
+        "doc": "/nix/store/mb5kkl4yar0i9m20f6bglah9l7a28fcs-git-2.56.0-doc",
+        "out": "/nix/store/xgw813vgzl2q0696sq45adpj0xd690jq-git-2.56.0"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -143,17 +149,17 @@
     {
       "attr_path": "gnumake",
       "broken": false,
-      "derivation": "/nix/store/qkmyhkzsp0syiajszd2igd4nl5zn4p3q-gnumake-4.4.1.drv",
+      "derivation": "/nix/store/k8pyap7djnhn373l8ggpw2mybmjb1lxf-gnumake-4.4.1.drv",
       "description": "Tool to control the generation of non-source files from sources",
       "install_id": "gnumake",
       "license": "GPL-3.0-or-later",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "gnumake-4.4.1",
       "pname": "gnumake",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:27.625007Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.248410Z",
       "stabilities": [
         "unstable"
       ],
@@ -164,10 +170,10 @@
         "out"
       ],
       "outputs": {
-        "doc": "/nix/store/qpb2zaah86v6z1b0f40y90m6kf42hy3i-gnumake-4.4.1-doc",
-        "info": "/nix/store/dw5r16j2bsfpznbnzk3bbgxi3czy0rvn-gnumake-4.4.1-info",
-        "man": "/nix/store/av26gjivcsjdhq68pg6wb1l9f0ixakbv-gnumake-4.4.1-man",
-        "out": "/nix/store/rhw2r5z1rbp9msj03kf8i4rq1hygnm0f-gnumake-4.4.1"
+        "doc": "/nix/store/xl1nz3znzjb27wrig0vrf5fj3z7jqh5s-gnumake-4.4.1-doc",
+        "info": "/nix/store/99bqn610vynhvhwg8srd9g2l990cfa7a-gnumake-4.4.1-info",
+        "man": "/nix/store/g0hyk9rpf10di0l5x6gxjahh5rip30kn-gnumake-4.4.1-man",
+        "out": "/nix/store/306s97mvw5slpgg7hnb26xy37dhy4xk0-gnumake-4.4.1"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -176,17 +182,17 @@
     {
       "attr_path": "gnumake",
       "broken": false,
-      "derivation": "/nix/store/w54rcbkppj3y2agjh5fkfgf48g7458z8-gnumake-4.4.1.drv",
+      "derivation": "/nix/store/whg3qr4glzpg7b2l25msd6v1p3j1nvnf-gnumake-4.4.1.drv",
       "description": "Tool to control the generation of non-source files from sources",
       "install_id": "gnumake",
       "license": "GPL-3.0-or-later",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "gnumake-4.4.1",
       "pname": "gnumake",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:37.870516Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.424651Z",
       "stabilities": [
         "unstable"
       ],
@@ -197,11 +203,11 @@
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/fc4qn0vswxpj2qmprk0p0nvill18z7hb-gnumake-4.4.1-debug",
-        "doc": "/nix/store/ffz5ypa2rwi78c6c9syncnpwhhdhaqr1-gnumake-4.4.1-doc",
-        "info": "/nix/store/kj5yr5dpvzij2x83ig9y0bp3dbvgsyic-gnumake-4.4.1-info",
-        "man": "/nix/store/fa0k4ps7a35yxf902shfzz8gmd8a9x2g-gnumake-4.4.1-man",
-        "out": "/nix/store/wadg45zgfyi9a4dcm5fy3qvlas76cr2z-gnumake-4.4.1"
+        "debug": "/nix/store/f7yag335k3y4ymn9hb5q1yzqc1njf1hi-gnumake-4.4.1-debug",
+        "doc": "/nix/store/782lakmsm9nxf4hpnn8whmq541cphv6r-gnumake-4.4.1-doc",
+        "info": "/nix/store/51cb4z2jrvqdnab9cc8hjf478c8f55hw-gnumake-4.4.1-info",
+        "man": "/nix/store/nacivbyfzp1w0xydskbxrkapp2gn552s-gnumake-4.4.1-man",
+        "out": "/nix/store/nk0i2hc4x8qpshj326jzn36hkbgi7j7z-gnumake-4.4.1"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -210,17 +216,17 @@
     {
       "attr_path": "gnumake",
       "broken": false,
-      "derivation": "/nix/store/fp58w5my653rg2zj1aq5xgyi58f9y4vp-gnumake-4.4.1.drv",
+      "derivation": "/nix/store/ccbm4sfzcp3fvmhjh2anccnirrc91lyi-gnumake-4.4.1.drv",
       "description": "Tool to control the generation of non-source files from sources",
       "install_id": "gnumake",
       "license": "GPL-3.0-or-later",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "gnumake-4.4.1",
       "pname": "gnumake",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:14:59.501876Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:53.777639Z",
       "stabilities": [
         "unstable"
       ],
@@ -231,98 +237,11 @@
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/1a2srjw3r7sif10sh4zl3k0zin0f09xm-gnumake-4.4.1-debug",
-        "doc": "/nix/store/15y7ym18qm8dk03b7fnpc9bvccccm33q-gnumake-4.4.1-doc",
-        "info": "/nix/store/p18m4dcs9wylvddhprcczaaqqns2sb1d-gnumake-4.4.1-info",
-        "man": "/nix/store/8ayxbdiddzn28damz1f9gb0asx1j409b-gnumake-4.4.1-man",
-        "out": "/nix/store/r60jpv4jr5h50f0rj1k5adlwic2vgldn-gnumake-4.4.1"
-      },
-      "system": "x86_64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "go",
-      "broken": false,
-      "derivation": "/nix/store/nai0r884zly4zrzxzx02cb9pgnjizpi8-go-1.26.5.drv",
-      "description": "Go Programming language",
-      "install_id": "go",
-      "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "go-1.26.5",
-      "pname": "go",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:27.637595Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "1.26.5",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/8g06ffyaas333hzhsjcd50nqbsldqjhh-go-1.26.5"
-      },
-      "system": "aarch64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "go",
-      "broken": false,
-      "derivation": "/nix/store/rbvap710527sdym1fq99nd9sapfwgw1g-go-1.26.5.drv",
-      "description": "Go Programming language",
-      "install_id": "go",
-      "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "go-1.26.5",
-      "pname": "go",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:37.886101Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "1.26.5",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/p8wbwrmaqggbg1griwkcjag8lbkgz0qg-go-1.26.5"
-      },
-      "system": "aarch64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "go",
-      "broken": false,
-      "derivation": "/nix/store/2s46bm7d49srfl31ay0304yg56vfi8q6-go-1.26.5.drv",
-      "description": "Go Programming language",
-      "install_id": "go",
-      "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "go-1.26.5",
-      "pname": "go",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:14:59.519594Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "1.26.5",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/pwj3x44pp735yb038fnmqckyyra9k29x-go-1.26.5"
+        "debug": "/nix/store/k7lz9zpj52al794kkw0d80hwj2v7pn9h-gnumake-4.4.1-debug",
+        "doc": "/nix/store/7c3i6ivjqgc7hz21bchima12lxk8c1s4-gnumake-4.4.1-doc",
+        "info": "/nix/store/9lbfzcvwx1c859fy6k0l9cbkp6fcxd9l-gnumake-4.4.1-info",
+        "man": "/nix/store/ncw4l9vr02fh2prknq5dhmdycb00rdmr-gnumake-4.4.1-man",
+        "out": "/nix/store/vs2sa1msvkjxbb70h47819zq8a9srj21-gnumake-4.4.1"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -331,17 +250,17 @@
     {
       "attr_path": "goreleaser",
       "broken": false,
-      "derivation": "/nix/store/5cmsnfpp0066xlz0j16xdln49xigxpdl-goreleaser-2.17.1.drv",
+      "derivation": "/nix/store/qwm1nh3214axsblyy70v87dw3062vfsz-goreleaser-2.17.1.drv",
       "description": "Deliver Go binaries as fast and easily as possible",
       "install_id": "goreleaser",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "goreleaser-2.17.1",
       "pname": "goreleaser",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:27.737745Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.249503Z",
       "stabilities": [
         "unstable"
       ],
@@ -351,7 +270,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/z38i86fijgf16lf2z3zym71bx0hwdv9r-goreleaser-2.17.1"
+        "out": "/nix/store/f6iv5b3vm5vmm68mbd6xv7rmzn7gaz8a-goreleaser-2.17.1"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -360,17 +279,17 @@
     {
       "attr_path": "goreleaser",
       "broken": false,
-      "derivation": "/nix/store/a8w8ikbgvjr9c5vpd99pqbm8263ljmgm-goreleaser-2.17.1.drv",
+      "derivation": "/nix/store/6qimbmpbfln2rqyvjn6m7rwphbg76l3h-goreleaser-2.17.1.drv",
       "description": "Deliver Go binaries as fast and easily as possible",
       "install_id": "goreleaser",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "goreleaser-2.17.1",
       "pname": "goreleaser",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:38.035104Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.426112Z",
       "stabilities": [
         "unstable"
       ],
@@ -380,7 +299,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/9x14j5m9z1yjijv41xiwsppz49ykcqp6-goreleaser-2.17.1"
+        "out": "/nix/store/jps9d40h0yfbsrjbkampvj6mp78k826p-goreleaser-2.17.1"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -389,17 +308,17 @@
     {
       "attr_path": "goreleaser",
       "broken": false,
-      "derivation": "/nix/store/pnnqdqw3yc4wwcvwsmd2mp452x4ls75q-goreleaser-2.17.1.drv",
+      "derivation": "/nix/store/6b958f2adw6nxnr5lkp2sqh3j3l27vyy-goreleaser-2.17.1.drv",
       "description": "Deliver Go binaries as fast and easily as possible",
       "install_id": "goreleaser",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "goreleaser-2.17.1",
       "pname": "goreleaser",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:14:59.678373Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:53.779071Z",
       "stabilities": [
         "unstable"
       ],
@@ -409,7 +328,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/j5fiy9ic6vhhzgq1yp2dwp9cgpqmfi11-goreleaser-2.17.1"
+        "out": "/nix/store/r7vf7c2k69kldy8zqy40hc7hrk4r7fkr-goreleaser-2.17.1"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -418,17 +337,17 @@
     {
       "attr_path": "iana-etc",
       "broken": false,
-      "derivation": "/nix/store/pqy14sm1s4vyd62ykyb620wd0fv767lz-iana-etc-20251215.drv",
+      "derivation": "/nix/store/n3az6snsiy9lcd69qyj9wvkw8j2z44v6-iana-etc-20251215.drv",
       "description": "IANA protocol and port number assignments (/etc/protocols and /etc/services)",
       "install_id": "iana-etc",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "iana-etc-20251215",
       "pname": "iana-etc",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:43.467462Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.343589Z",
       "stabilities": [
         "unstable"
       ],
@@ -436,10 +355,12 @@
       "version": "20251215",
       "outputs_to_install": [
         "out",
+        "out",
+        "out",
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/kmvrlsyd2k2hp8c4rdk5z6y05pxashpr-iana-etc-20251215"
+        "out": "/nix/store/8zadk3vid4kvmk3xqv5hcqihd23nj2rw-iana-etc-20251215"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -448,17 +369,17 @@
     {
       "attr_path": "iana-etc",
       "broken": false,
-      "derivation": "/nix/store/rbdhac957x4l20krwj1z3p5b2xcpphlw-iana-etc-20251215.drv",
+      "derivation": "/nix/store/gdflcbxjprjwwlhbiwyvwkdz10jrjzk5-iana-etc-20251215.drv",
       "description": "IANA protocol and port number assignments (/etc/protocols and /etc/services)",
       "install_id": "iana-etc",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "iana-etc-20251215",
       "pname": "iana-etc",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:55.896260Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.529031Z",
       "stabilities": [
         "unstable"
       ],
@@ -467,10 +388,11 @@
       "outputs_to_install": [
         "out",
         "out",
+        "out",
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/bknwi0mk48rvgfzggxl795lmspmmcz46-iana-etc-20251215"
+        "out": "/nix/store/a9l8h2d532wk9zpyvl3qms0v5iwbjp67-iana-etc-20251215"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -479,17 +401,17 @@
     {
       "attr_path": "iana-etc",
       "broken": false,
-      "derivation": "/nix/store/db9z4dl34h66ia05da1jqda6mknmd60p-iana-etc-20251215.drv",
+      "derivation": "/nix/store/sknvxq5nwj1pjbqck58cqf8d2llpky3d-iana-etc-20251215.drv",
       "description": "IANA protocol and port number assignments (/etc/protocols and /etc/services)",
       "install_id": "iana-etc",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "iana-etc-20251215",
       "pname": "iana-etc",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:15:18.743253Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:53.857946Z",
       "stabilities": [
         "unstable"
       ],
@@ -498,10 +420,11 @@
       "outputs_to_install": [
         "out",
         "out",
+        "out",
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/jab95mm9b2qb8ygk45l600mb2pp5xbr4-iana-etc-20251215"
+        "out": "/nix/store/j1dffl1f3g8wphn77q69k4y4ccw36bzw-iana-etc-20251215"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -510,17 +433,17 @@
     {
       "attr_path": "jq",
       "broken": false,
-      "derivation": "/nix/store/45j7x06lz3jrdwsahvlds5n1v0fq59wc-jq-1.8.2.drv",
+      "derivation": "/nix/store/hg65cbj37jnlxcz42jzsb4wbvh71a824-jq-1.8.2.drv",
       "description": "Lightweight and flexible command-line JSON processor",
       "install_id": "jq",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "jq-1.8.2",
       "pname": "jq",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:00:44.296140Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.346191Z",
       "stabilities": [
         "unstable"
       ],
@@ -528,14 +451,16 @@
       "version": "1.8.2",
       "outputs_to_install": [
         "bin",
+        "bin",
+        "man",
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/si622aj9znsy96kdwsrg54dxzp9m35qw-jq-1.8.2-bin",
-        "dev": "/nix/store/zcvl9cnw5a44f74gw8aa8fh8cfynjc76-jq-1.8.2-dev",
-        "doc": "/nix/store/4s66blj2afdqbzaq8ilw30v7kpjb6ypw-jq-1.8.2-doc",
-        "man": "/nix/store/jp2c61il2ycagni1j5c1jrglnypvbf5k-jq-1.8.2-man",
-        "out": "/nix/store/z28yr7h99fi3mch4dh3bc50bjk6malsl-jq-1.8.2"
+        "bin": "/nix/store/vvp6grz676r5jvsry7sf7kxqb4lwdd62-jq-1.8.2-bin",
+        "dev": "/nix/store/xyclm6bwinnb3f8zmm68s3swfhgnlphx-jq-1.8.2-dev",
+        "doc": "/nix/store/n3nximdbin1mj1ji5hwv4nacy6yp5dn5-jq-1.8.2-doc",
+        "man": "/nix/store/makwmvlz85ngimxrznbisy864hvc3g0s-jq-1.8.2-man",
+        "out": "/nix/store/hdhazyigrpwh5ccrh26fsnj9m5al192a-jq-1.8.2"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -544,17 +469,17 @@
     {
       "attr_path": "jq",
       "broken": false,
-      "derivation": "/nix/store/lpj1cw1ipnqdc3d3wxz4ry5lcf6hk075-jq-1.8.2.drv",
+      "derivation": "/nix/store/x18cabwdkllgb5fv41z8af1rny9xv8cc-jq-1.8.2.drv",
       "description": "Lightweight and flexible command-line JSON processor",
       "install_id": "jq",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "jq-1.8.2",
       "pname": "jq",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:34:57.174712Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.536751Z",
       "stabilities": [
         "unstable"
       ],
@@ -563,14 +488,16 @@
       "outputs_to_install": [
         "bin",
         "bin",
+        "bin",
+        "man",
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/rjaclwgima9ssysv7v0h2hq46g8sikd4-jq-1.8.2-bin",
-        "dev": "/nix/store/yy0mx8yjmzkk154mmp1vx4b0kz0ndw6y-jq-1.8.2-dev",
-        "doc": "/nix/store/yqx0xva9dq6rnvxgwcadrmni1l8ympa1-jq-1.8.2-doc",
-        "man": "/nix/store/1w15pijismpwnainv71a6pdnsypjnqg7-jq-1.8.2-man",
-        "out": "/nix/store/0x995g1z807ynhzsh2f6yj0jsw6pr50f-jq-1.8.2"
+        "bin": "/nix/store/16bc59xb22679a0mdzvlirr9n6i8ca8m-jq-1.8.2-bin",
+        "dev": "/nix/store/cnzj4nl177snn6b0chi3xwp87vfk5m7j-jq-1.8.2-dev",
+        "doc": "/nix/store/xxd5jc37da38qlbjxqc05x77x2mvv4hw-jq-1.8.2-doc",
+        "man": "/nix/store/35czxi6qcb15jwlv2n2aksahkx4yr4wd-jq-1.8.2-man",
+        "out": "/nix/store/x8g0a13kma26kca8f5a1w6f0n54jyp65-jq-1.8.2"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -579,17 +506,17 @@
     {
       "attr_path": "jq",
       "broken": false,
-      "derivation": "/nix/store/bcp8pk4lzbfxrlgicm9i8jlwidg6x6jg-jq-1.8.2.drv",
+      "derivation": "/nix/store/2rkll8ncy5ldfv8zivk8ml6sga8zifgv-jq-1.8.2.drv",
       "description": "Lightweight and flexible command-line JSON processor",
       "install_id": "jq",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
       "name": "jq-1.8.2",
       "pname": "jq",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:15:20.174753Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:53.862084Z",
       "stabilities": [
         "unstable"
       ],
@@ -598,14 +525,16 @@
       "outputs_to_install": [
         "bin",
         "bin",
+        "bin",
+        "man",
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/4b6f9wb1qak318gk7mxlfkhril6lxpcx-jq-1.8.2-bin",
-        "dev": "/nix/store/sp8a7n50g32lzzsc7dz09ry2vc9bh4y0-jq-1.8.2-dev",
-        "doc": "/nix/store/dp4rs4vpwp44c7vvgskj1hly0d6xqf2m-jq-1.8.2-doc",
-        "man": "/nix/store/4zwaa20khsi2drbg16i5z3wxbjf88mm6-jq-1.8.2-man",
-        "out": "/nix/store/z438hrlp3j75bpmq87ymzabb8vrda8ps-jq-1.8.2"
+        "bin": "/nix/store/9l0j15jg8634hkb6d4c9y95mpxl0nhrd-jq-1.8.2-bin",
+        "dev": "/nix/store/za20v1vwh492da54qj2mi71lf2m7k5ra-jq-1.8.2-dev",
+        "doc": "/nix/store/5hlxy34nbli4axjjkpm7d74x16c3l3h5-jq-1.8.2-doc",
+        "man": "/nix/store/kyc6a29vbm7k4nh84bj17gxaljnic3a9-jq-1.8.2-man",
+        "out": "/nix/store/hcagcif4hcac22rrspzgg8p9g0aqs741-jq-1.8.2"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -614,22 +543,22 @@
     {
       "attr_path": "tzdata",
       "broken": false,
-      "derivation": "/nix/store/g7w46dlmp178iy9125v92ysm2har28av-tzdata-2026c.drv",
+      "derivation": "/nix/store/0mpy3qlrs9nn3az47ldwawswmh19rn9a-tzdata-2026e.drv",
       "description": "Database of current and historical time zones",
       "install_id": "tzdata",
       "license": "[ BSD-3-Clause, Public Domain ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "tzdata-2026c",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "tzdata-2026e",
       "pname": "tzdata",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:03:09.838292Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T05:47:33.669916Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2026c",
+      "version": "2026e",
       "outputs_to_install": [
         "bin",
         "bin",
@@ -637,10 +566,10 @@
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/xfx7h4y8jqsnrd9nab4610bybl5yk9km-tzdata-2026c-bin",
-        "dev": "/nix/store/x21l2id7z0iq91k29i8y1pjshbdz06mz-tzdata-2026c-dev",
-        "man": "/nix/store/5hls0klazy215p8wi0c5jqh6b6k011ns-tzdata-2026c-man",
-        "out": "/nix/store/47h50kyzbgx8zdy0d3xd4yzmy8pq55hv-tzdata-2026c"
+        "bin": "/nix/store/z7k885mlh13miqx6gdnqrp4fiqx9abcx-tzdata-2026e-bin",
+        "dev": "/nix/store/1axsfm7x70lj310my1sdybrpmqsnnp47-tzdata-2026e-dev",
+        "man": "/nix/store/y80p3p7azs5yc6j5c7z1nz930v2412zh-tzdata-2026e-man",
+        "out": "/nix/store/v7pl3md4rm2iprj2smf9892wmgj5sh7m-tzdata-2026e"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -649,33 +578,31 @@
     {
       "attr_path": "tzdata",
       "broken": false,
-      "derivation": "/nix/store/jgn9pk71lihcnqz00npl5qmk96vrlmk5-tzdata-2026c.drv",
+      "derivation": "/nix/store/f7rgi8w5y76z9br6bln9978qld661c5w-tzdata-2026e.drv",
       "description": "Database of current and historical time zones",
       "install_id": "tzdata",
       "license": "[ BSD-3-Clause, Public Domain ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "tzdata-2026c",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "tzdata-2026e",
       "pname": "tzdata",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T05:38:02.796734Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:15:34.849847Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2026c",
+      "version": "2026e",
       "outputs_to_install": [
         "bin",
-        "bin",
-        "man",
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/dbrfaikb9dpyx201fy49hz0h1f1dhi6k-tzdata-2026c-bin",
-        "dev": "/nix/store/dcqisgp4fwp0y8hp11984804mn8f1dr4-tzdata-2026c-dev",
-        "man": "/nix/store/z2jy8b4cjcmi5008bc8qxvs6k4qr7g0k-tzdata-2026c-man",
-        "out": "/nix/store/zldvyvcxx4rwb4r1b92c34fcs634623w-tzdata-2026c"
+        "bin": "/nix/store/prrcsdfrj5ily65fbh44b30ipf81ayk7-tzdata-2026e-bin",
+        "dev": "/nix/store/6ij6s0b35fqp4g7h1gbyk0khyx3xn5j2-tzdata-2026e-dev",
+        "man": "/nix/store/6nfpahmjwb2hjilfphm8v739lgwi4nrk-tzdata-2026e-man",
+        "out": "/nix/store/ad9h5b41f7x4fvk22axfjvxykisyjc15-tzdata-2026e"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -684,36 +611,127 @@
     {
       "attr_path": "tzdata",
       "broken": false,
-      "derivation": "/nix/store/92gzbdipapm76dwa8ckxlfzdc67a9rp8-tzdata-2026c.drv",
+      "derivation": "/nix/store/8r8x70f54kf47xxlr52i749sildywypz-tzdata-2026e.drv",
       "description": "Database of current and historical time zones",
       "install_id": "tzdata",
       "license": "[ BSD-3-Clause, Public Domain ]",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "name": "tzdata-2026c",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=1c89083e451e891152365b799595cf7790a43325",
+      "name": "tzdata-2026e",
       "pname": "tzdata",
-      "rev": "2fcb964de67fcf60b43471c55d5d99e61a9ccb5a",
-      "rev_count": 1051473,
-      "rev_date": "2026-08-10T17:52:38Z",
-      "scrape_date": "2026-08-12T06:18:32.400117Z",
+      "rev": "1c89083e451e891152365b799595cf7790a43325",
+      "rev_count": 1105037,
+      "rev_date": "2026-10-30T06:21:25Z",
+      "scrape_date": "2026-10-31T06:45:54.137465Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "2026c",
+      "version": "2026e",
       "outputs_to_install": [
         "bin",
-        "bin",
-        "man",
         "man"
       ],
       "outputs": {
-        "bin": "/nix/store/k14l2l8ci9hn2imw65g68s4k6h0dn2gk-tzdata-2026c-bin",
-        "dev": "/nix/store/8g5fs5prvfmp8idb23y39mnjfhmsbcqy-tzdata-2026c-dev",
-        "man": "/nix/store/wqya4b31yii21xfxc5i0n1wh795f2a3p-tzdata-2026c-man",
-        "out": "/nix/store/2nndxyf3phkb5aggxm3c16sapa0f49kz-tzdata-2026c"
+        "bin": "/nix/store/n1xirqss8xnqyq0inv6xhwyrgry80bv3-tzdata-2026e-bin",
+        "dev": "/nix/store/zhmr1m46y00wh8v00g71d8aq5n9vssyk-tzdata-2026e-dev",
+        "man": "/nix/store/0nmjnv3imhw13f3a4d7qilkn2s4lpjlk-tzdata-2026e-man",
+        "out": "/nix/store/fsrw69w5mx838p7xydbdvywhwl6wnbjw-tzdata-2026e"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "go",
+      "broken": false,
+      "derivation": "/nix/store/yzbq4q464s7h7654ks9pgaggnh5j9jiz-go-1.27.3.drv",
+      "description": "Go Programming language",
+      "install_id": "go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/floxenvs?rev=c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "name": "go-1.27.3",
+      "pname": "go",
+      "rev": "c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "rev_count": 29683,
+      "rev_date": "2026-10-20T18:37:19Z",
+      "scrape_date": "2026-11-03T00:06:05.067140Z",
+      "stabilities": [
+        "unstable",
+        "stable",
+        "staging"
+      ],
+      "unfree": false,
+      "version": "1.27.3",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/n2jg9f83lrwk9j33s9z7pacl1anjsggl-go-1.27.3"
+      },
+      "system": "aarch64-darwin",
+      "group": "go",
+      "priority": 5
+    },
+    {
+      "attr_path": "go",
+      "broken": false,
+      "derivation": "/nix/store/0fv5vi4xiy6glas4dcn3kfkrbypdadl1-go-1.27.3.drv",
+      "description": "Go Programming language",
+      "install_id": "go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/floxenvs?rev=c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "name": "go-1.27.3",
+      "pname": "go",
+      "rev": "c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "rev_count": 29683,
+      "rev_date": "2026-10-20T18:37:19Z",
+      "scrape_date": "2026-11-03T00:06:05.067145Z",
+      "stabilities": [
+        "unstable",
+        "stable",
+        "staging"
+      ],
+      "unfree": false,
+      "version": "1.27.3",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/0lm4kb78wjy61zm47c2fbhmi3dzd8rsz-go-1.27.3"
+      },
+      "system": "aarch64-linux",
+      "group": "go",
+      "priority": 5
+    },
+    {
+      "attr_path": "go",
+      "broken": false,
+      "derivation": "/nix/store/81y0n7ildrmb0m4zax8z1mrj24w3i0ik-go-1.27.3.drv",
+      "description": "Go Programming language",
+      "install_id": "go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/floxenvs?rev=c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "name": "go-1.27.3",
+      "pname": "go",
+      "rev": "c7b02f1ac5a31a51c14a8d17e21151b7c0c48782",
+      "rev_count": 29683,
+      "rev_date": "2026-10-20T18:37:19Z",
+      "scrape_date": "2026-11-03T00:06:05.067145Z",
+      "stabilities": [
+        "unstable",
+        "stable",
+        "staging"
+      ],
+      "unfree": false,
+      "version": "1.27.3",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/rg4azz8rvrq1ndk430sdgd7xanzzfar1-go-1.27.3"
+      },
+      "system": "x86_64-linux",
+      "group": "go",
       "priority": 5
     }
   ]

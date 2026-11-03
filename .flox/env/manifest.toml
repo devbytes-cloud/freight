@@ -1,14 +1,16 @@
-schema-version = "1.14.0"
+schema-version = "1.13.0"
 
 
 [install]
-go.pkg-path = "go"
 git.pkg-path = "git"
 jq.pkg-path = "jq"
 gnumake.pkg-path = "gnumake"
 goreleaser.pkg-path = "goreleaser"
 tzdata.pkg-path = "tzdata"
 iana-etc.pkg-path = "iana-etc"
+go.pkg-path = "flox/go"
+go.pkg-group = "go"
+go.version = "1.27.3"
 
 
 [build]
