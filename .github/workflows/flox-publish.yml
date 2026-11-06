@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Flox
-        uses: flox/install-flox-action@v2
+        uses: flox/install-flox-action@5bb9eaaffbeaa699a8251a1ae21ecf4c8e0e37d4 # v2.7.0
       - name: Publish to Flox Catalog
         run: flox publish --org devbytes freight
         env:
