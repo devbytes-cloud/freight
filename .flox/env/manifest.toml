@@ -8,11 +8,12 @@ gnumake.pkg-path = "gnumake"
 tzdata.pkg-path = "tzdata"
 iana-etc.pkg-path = "iana-etc"
 go.pkg-path = "flox/go"
-go.pkg-group = "go"
 go.version = "1.27.3"
 goreleaser.pkg-path = "goreleaser"
 goreleaser.version = "2.20.0"
+goreleaser.pkg-group = "tools"
 golangci-lint.pkg-path = "golangci-lint"
+golangci-lint.pkg-group = "tools"
 
 
 [build]
@@ -20,14 +21,20 @@ golangci-lint.pkg-path = "golangci-lint"
 [build.freight]
 sandbox = "off"
 description = "Zero-dependency Git hook orchestrator driven by a declarative JSON manifest"
-version.command = "jq -r '.\".\"' .release-please-manifest.json"
+version.command = "git describe --tags --match 'v*' --dirty --always | sed 's/^v//'"
 runtime-packages = ["tzdata", "iana-etc"]
 command = '''
-  goreleaser build --single-target --snapshot --clean
+  make conductor-build-binaries
+
+  pkg=github.com/devbytes-cloud/freight/internal/commands
+  version="$(git describe --tags --match 'v*' --dirty --always | sed 's/^v//')"
+  commit="$(git rev-parse HEAD)"
+  date="$(TZ=UTC git log -1 --format=%cd --date=format-local:%Y-%m-%dT%H:%M:%SZ)"
 
   mkdir -p "$out/bin"
-  cp dist/freight_*/freight "$out/bin/freight"
-  chmod +x "$out/bin/freight"
+  CGO_ENABLED=0 go build -trimpath \
+    -ldflags "-s -w -X $pkg.Version=$version -X $pkg.Commit=$commit -X $pkg.Date=$date" \
+    -o "$out/bin/freight" ./cmd/freight
 '''
 
 [options]
