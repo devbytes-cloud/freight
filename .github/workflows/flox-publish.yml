@@ -2,7 +2,17 @@ name: flox publish
 
 on:
   workflow_call:
+    inputs:
+      tag:
+        description: Release tag to publish
+        required: true
+        type: string
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -18,10 +28,16 @@ jobs:
           - runner: macos-latest
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: Checkout
+      - name: Checkout ${{ inputs.tag }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ inputs.tag }}
           fetch-depth: 0
+      - name: Attach a branch for flox publish
+        run: |
+          git checkout -B main
+          git branch --set-upstream-to=origin/main
+          git status --short --branch
       - name: Install Flox
         uses: flox/install-flox-action@v2
       - name: Publish to Flox Catalog

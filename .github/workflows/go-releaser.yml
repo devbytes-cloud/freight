@@ -29,4 +29,6 @@ jobs:
   flox-publish:
     needs: goreleaser
     uses: ./.github/workflows/flox-publish.yml
+    with:
+      tag: ${{ github.ref_name }}
     secrets: inherit
