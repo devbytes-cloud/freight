@@ -22,3 +22,5 @@ jobs:
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
+        with:
+          install-mode: none
