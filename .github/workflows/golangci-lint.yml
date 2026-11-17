@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-go@v7
-        with:
-          go-version-file: go.mod
+      - uses: flox/install-flox-action@v2
+      - uses: devbytes-cloud/flox-activate-action@v1
 
       - name: make placeholder assets
         run: make asset-placeholders
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
+        with:
+          install-mode: none

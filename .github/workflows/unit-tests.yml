@@ -14,11 +14,26 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up Go
-        uses: actions/setup-go@v7
+      - name: Install Flox
+        uses: flox/install-flox-action@v2
+
+      - name: Activate Flox environment
+        uses: devbytes-cloud/flox-activate-action@v1
+
+      - name: Locate Go caches
+        id: go-cache
+        run: |
+          echo "modcache=$(go env GOMODCACHE)" >> "$GITHUB_OUTPUT"
+          echo "buildcache=$(go env GOCACHE)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Go modules and build cache
+        uses: actions/cache@v6
         with:
-          # Reads version from go.mod; override with a specific version if you prefer
-          go-version-file: go.mod
+          path: |
+            ${{ steps.go-cache.outputs.modcache }}
+            ${{ steps.go-cache.outputs.buildcache }}
+          key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('go.sum', '.flox/env/manifest.lock') }}
+          restore-keys: go-${{ runner.os }}-${{ runner.arch }}-
 
       - name: make placeholder assets
         run: make asset-placeholders
