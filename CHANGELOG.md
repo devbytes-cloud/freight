@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/devbytes-cloud/freight/compare/v0.5.0...v0.5.1) (2026-11-17)
+
+
+### Bug Fixes
+
+* floxbuilds and conductor builds ([#120](https://github.com/devbytes-cloud/freight/issues/120)) ([1e43967](https://github.com/devbytes-cloud/freight/commit/1e439673e6ee495ad453435683debeb4ee598495))
+
 ## [0.5.0](https://github.com/devbytes-cloud/freight/compare/v0.4.0...v0.5.0) (2026-11-17)
 
 
