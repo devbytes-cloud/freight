@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install Flox
-        uses: flox/install-flox-action@v2
+        uses: flox/install-flox-action@5bb9eaaffbeaa699a8251a1ae21ecf4c8e0e37d4 # v2
 
       - name: Activate Flox environment
-        uses: devbytes-cloud/flox-activate-action@v1
+        uses: devbytes-cloud/flox-activate-action@fd28ae0099c396c187abc55236ef40e9496a65be # v1
 
       - name: Locate Go caches
         id: go-cache
@@ -27,7 +27,7 @@ jobs:
           echo "buildcache=$(go env GOCACHE)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Go modules and build cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             ${{ steps.go-cache.outputs.modcache }}

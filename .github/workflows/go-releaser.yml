@@ -17,9 +17,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Flox
-        uses: flox/install-flox-action@v2
+        uses: flox/install-flox-action@5bb9eaaffbeaa699a8251a1ae21ecf4c8e0e37d4 # v2
       - name: Activate Flox environment
-        uses: devbytes-cloud/flox-activate-action@v1
+        uses: devbytes-cloud/flox-activate-action@fd28ae0099c396c187abc55236ef40e9496a65be # v1
       - name: Run GoReleaser
         run: goreleaser release --clean
         env:
