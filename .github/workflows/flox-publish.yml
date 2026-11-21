@@ -39,7 +39,7 @@ jobs:
           git branch --set-upstream-to=origin/main
           git status --short --branch
       - name: Install Flox
-        uses: flox/install-flox-action@v2
+        uses: flox/install-flox-action@5bb9eaaffbeaa699a8251a1ae21ecf4c8e0e37d4 # v2
       - name: Publish to Flox Catalog
         run: flox publish --org devbytes freight
         env:
